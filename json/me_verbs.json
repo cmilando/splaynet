@@ -1,0 +1,122 @@
+{
+  "draw": {
+    "fmt_str": "{0} draw {1}.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "None",
+        "to_player": "0",
+        "from_state": "supply",
+        "to_state": "hand",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "meld": {
+    "fmt_str": "{0} meld {1} from your hand.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "0",
+        "to_player": "0",
+        "from_state": "hand",
+        "to_state": "board",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "tuck": {
+    "fmt_str": "{0} tuck {1} from your hand.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "0",
+        "to_player": "0",
+        "from_state": "hand",
+        "to_state": "board",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "score": {
+    "fmt_str": "{0} score {1} from your {2}.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "0",
+        "to_player": "0",
+        "from_state": "2",
+        "to_state": "score",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "transfer": {
+    "fmt_str": "{0} transfer {1} from {2} {3} to {4} {5}.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "2",
+        "to_player": "4",
+        "from_state": "3",
+        "to_state": "5",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "return": {
+    "fmt_str": "{0} return {1} from your {2}.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "0",
+        "to_player": "None",
+        "from_state": "2",
+        "to_state": "supply",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "draw_and_reveal": {
+    "fmt_str": "{0} draw_and_reveal {1}.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "None",
+        "to_player": "0",
+        "from_state": "supply",
+        "to_state": "hand",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "draw_and_tuck": {
+    "fmt_str": "{0} draw_and_tuck {1}.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "None",
+        "to_player": "0",
+        "from_state": "supply",
+        "to_state": "board",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "draw_and_meld": {
+    "fmt_str": "{0} draw_and_meld {1}.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "None",
+        "to_player": "0",
+        "from_state": "supply",
+        "to_state": "board",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  },
+  "draw_and_score": {
+    "fmt_str": "{0} draw_and_score {1}.",
+    "fmt_map": {
+        "subject": "0",
+        "from_player": "None",
+        "to_player": "0",
+        "from_state": "supply",
+        "to_state": "score",
+        "card_age": "None",
+        "card_name": "1"
+    }
+  }
+}

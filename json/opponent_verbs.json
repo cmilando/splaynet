@@ -1,0 +1,170 @@
+{
+    "draws a" : {
+        "fmt_str": "{0} draws a {1}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "None",
+            "to_player": "0",
+            "from_state": "supply",
+            "to_state": "hand",
+            "card_age": "1",
+            "card_name": "None"
+        }
+    },
+    "draws_and_reveals": {
+        "fmt_str": "{0} draws_and_reveals {1}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "None",
+            "to_player": "0",
+            "from_state": "supply",
+            "to_state": "hand",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "melds": {
+        "fmt_str": "{0} melds {1} from their hand.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "0",
+            "to_player": "0",
+            "from_state": "hand",
+            "to_state": "board",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "tucks": {
+        "fmt_str": "{0} tucks {1} from their hand.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "0",
+            "to_player": "0",
+            "from_state": "hand",
+            "to_state": "board",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "scores": {
+        "fmt_str": "{0} scores {1} from their {2}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "0",
+            "to_player": "0",
+            "from_state": "2",
+            "to_state": "score",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "scores a": {
+        "fmt_str": "{0} scores a {1} from their {2}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "0",
+            "to_player": "0",
+            "from_state": "2",
+            "to_state": "score",
+            "card_age": "1",
+            "card_name": "None"
+        }
+    },
+    "transfers": {
+        "fmt_str": "{0} transfers {1} from {2} {3} to {4} {5}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "2",
+            "to_player": "4",
+            "from_state": "3",
+            "to_state": "5",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "transfers a": {
+        "fmt_str": "{0} transfers a {1} from {2} {3} to {4} {5}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "2",
+            "to_player": "4",
+            "from_state": "3",
+            "to_state": "5",
+            "card_age": "1",
+            "card_name": "None"
+        }
+    },
+    "returns1": {
+        "fmt_str": "{0} returns {1}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "0",
+            "to_player": "None",
+            "from_state": "hand",
+            "to_state": "supply",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "returns2": {
+        "fmt_str": "{0} returns a {1} from their {2}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "0",
+            "to_player": "None",
+            "from_state": "hand",
+            "to_state": "supply",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "returns a": {
+        "fmt_str": "{0} returns a {1} from their {2}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "0",
+            "to_player": "None",
+            "from_state": "2",
+            "to_state": "supply",
+            "card_age": "1",
+            "card_name": "None"
+        }
+    },
+    "draws_and_tucks": {
+        "fmt_str": "{0} draws_and_tucks {1}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "None",
+            "to_player": "0",
+            "from_state": "supply",
+            "to_state": "board",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "draws_and_melds": {
+        "fmt_str": "{0} draws_and_melds {1}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "None",
+            "to_player": "0",
+            "from_state": "supply",
+            "to_state": "board",
+            "card_age": "None",
+            "card_name": "1"
+        }
+    },
+    "draws_and_scores a": {
+        "fmt_str": "{0} draws_and_scores a {1}.",
+        "fmt_map": {
+            "subject": "0",
+            "from_player": "None",
+            "to_player": "0",
+            "from_state": "supply",
+            "to_state": "score",
+            "card_age": "1",
+            "card_name": "None"
+        }
+    }
+}

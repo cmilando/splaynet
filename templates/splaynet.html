@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SplayNet v0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script language="JavaScript1.2" type="text/javascript">
+
+    function fillIn(){
+        if (document.cookie != ""){
+            cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++) {
+                cookie = cookies[i].trim().split("=");
+                if (cookie[0] == 'BGA_LOGIN') {
+                    document.login_info.BGA_LOGIN.value = cookie[1];
+                }
+                if (cookie[0] == 'BGA_PASSWORD') {
+                    document.login_info.BGA_PASSWORD.value = cookie[1];
+                }
+                if (cookie[0] == 'BGA_NAME') {
+                    document.login_info.BGA_NAME.value = cookie[1];
+                }
+                if (cookie[0] == 'TABLE_ID') {
+                    document.login_info.TABLE_ID.value = cookie[1];
+                }
+                if (cookie[0] == 'card_1') {
+                    document.login_info.card_1.value = cookie[1];
+                }
+                if (cookie[0] == 'card_2') {
+                    document.login_info.card_2.value = cookie[1];
+                }
+            }
+        }
+    }
+
+    </script>
+</head>
+<body onload="fillIn()">
+<h1>Splaynet</h1>
+<p>All of your bases are belong to us</p>
+<form action="{{ url_for('index') }}" method="POST" name="login_info">
+    <label>Enter BGA_LOGIN</label>
+    <input type="text" name="BGA_LOGIN">
+    <br><br>
+    <label>Enter BGA_PASSWORD</label>
+    <input type="text" name="BGA_PASSWORD">
+    <br><br>
+    <label>Enter BGA_NAME</label>
+    <input type="text" name="BGA_NAME">
+    <br><br>
+    <label>Enter table id</label>
+    <input type="text" name="TABLE_ID">
+    <br><br>
+    <label>Enter starting cards</label><br>
+    <input list="age_1_cards" name="card_1"><br>
+    <input list="age_1_cards" name="card_2">
+    <datalist id="age_1_cards">
+        <option value="Archery">
+        <option value="Metalworking">
+        <option value="Oars">
+        <option value="Agriculture">
+        <option value="Domestication">
+        <option value="Masonry">
+        <option value="Clothing">
+        <option value="Sailing">
+        <option value="The_Wheel">
+        <option value="Pottery">
+        <option value="Tools">
+        <option value="Writing">
+        <option value="Code_of_Laws">
+        <option value="City_States">
+        <option value="Mysticism">
+    </datalist>
+    <br><br>
+    <input type="submit" name="refresh" value="Refresh">
+</form>
+{% if result %}
+    <br><br>
+    {{ result[0] }} <!-- Date updated -->
+    <br><br>
+    {% for game_state in result[1] %}
+        {{ game_state }} <!-- whatever to prettyprint -->
+        <br><br>
+    {% endfor %}
+    <br><br>
+{% endif %}
+</body>
+</html>

@@ -4,3 +4,4 @@
 - the cookie for email is enclosed in "", that probably won't work for long
 - loading wheel
 - mobile friendly "cards" dropdowns
+- so much validation

@@ -7,7 +7,7 @@
 import json
 import pprint
 import flask
-from config import CARD_DATA, CARD_DATA_REVERSE
+from app.config import CARD_DATA, CARD_DATA_REVERSE
 
 # /////////////////////////////////////////////////////////////////////////////
 class Card():

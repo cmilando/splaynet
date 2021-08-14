@@ -1,9 +1,8 @@
 from selenium import webdriver
 import parse
-from config import me_verbs, opponent_verbs, CARD_NAMES, span_options, compound_verbs
+from app.config import me_verbs, opponent_verbs, CARD_NAMES, span_options, compound_verbs
 import time
 from bs4 import BeautifulSoup
-import pprint
 from copy import deepcopy
 
 # /////////////////////////////////////////////////////////////////////////////

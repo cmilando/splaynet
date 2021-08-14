@@ -1,4 +1,4 @@
-from class_board_v2 import Innovation
+from app.class_board_v2 import Innovation
 
 def process_moves(form, move_queue, n_players):
 

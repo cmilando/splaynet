@@ -1,12 +1,11 @@
 from flask import Flask
 from flask import render_template
 from flask import request
-from flask import json
 from flask import make_response
 import datetime
-from process_moves import process_moves
 
-from get_inprogress_game import get_move_queue
+from app.process_moves import process_moves
+from app.get_inprogress_game import get_move_queue
 
 app = Flask(__name__)
 
@@ -68,6 +67,5 @@ def index():
     return resp
 
 # -----------------------------------------------------------------------------
-if __name__ == "__main__":
-    app.run(debug=True)
+
 

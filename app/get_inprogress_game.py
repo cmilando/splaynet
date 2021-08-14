@@ -4,6 +4,8 @@ from app.config import me_verbs, opponent_verbs, CARD_NAMES, span_options, compo
 import time
 from bs4 import BeautifulSoup
 from copy import deepcopy
+GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
 # /////////////////////////////////////////////////////////////////////////////
 def bs_parse(l):
@@ -114,11 +116,14 @@ def get_webdriver(form, t_sleep=5):
     ## Set up headless webdriver
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless')
-    #chrome_options.add_argument('--no-sandbox')
-    #chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.binary_location = GOOGLE_CHROME_PATH
 
     print('Login')
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options,
+                              execution_path=CHROMEDRIVER_PATH)
     driver.get(LOGIN_URL)
 
     ## Log in using credentials

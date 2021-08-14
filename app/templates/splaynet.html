@@ -12,7 +12,8 @@
             for (var i = 0; i < cookies.length; i++) {
                 cookie = cookies[i].trim().split("=");
                 if (cookie[0] == 'BGA_LOGIN') {
-                    document.login_info.BGA_LOGIN.value = cookie[1];
+                    quoted_value = cookie[1];
+                    document.login_info.BGA_LOGIN.value = quoted_value.replace(/^"|"$/g, '');
                 }
                 if (cookie[0] == 'BGA_PASSWORD') {
                     document.login_info.BGA_PASSWORD.value = cookie[1];

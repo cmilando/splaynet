@@ -1,4 +1,5 @@
 import json
+import os
 
 STATE_OPTIONS = ['hand', 'board', 'score', 'supply', 'achievement']
 
@@ -30,3 +31,12 @@ compound_verbs = [
     'draws and melds',
     'draws and scores'
 ]
+
+###
+Debug = True
+if Debug:
+    GOOGLE_CHROME_PATH = ""
+    CHROMEDRIVER_PATH = "chromedriver"
+else:
+    GOOGLE_CHROME_PATH = os.environ.get('GOOGLE_CHROME_PATH')
+    CHROMEDRIVER_PATH = os.environ.get('CHROMEDRIVER_PATH')

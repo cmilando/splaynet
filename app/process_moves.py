@@ -23,8 +23,6 @@ def process_moves(form, move_queue, n_players):
     # then process move_queue
     for move in move_queue:
 
-        print(move['move_string'])
-
         for o in move:
             if move[o] == 'None':
                 move[o] = None

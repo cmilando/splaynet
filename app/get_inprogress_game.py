@@ -123,7 +123,7 @@ def get_webdriver(form, t_sleep=5):
 
     print('Login')
     driver = webdriver.Chrome(options=chrome_options,
-                              execution_path=CHROMEDRIVER_PATH)
+                              executable_path=CHROMEDRIVER_PATH)
     driver.get(LOGIN_URL)
 
     ## Log in using credentials

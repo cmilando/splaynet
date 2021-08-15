@@ -30,7 +30,7 @@ class Card():
     # the str method shows the card age and number of potential options
     def __str__(self):
 
-        return ('<Age ' + str(self.age) + '>')
+        return ('Age ' + str(self.age) + '')
 
     # So that it looks nice in lists
     __repr__ = __str__

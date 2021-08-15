@@ -4,3 +4,4 @@
 - loading wheel
 - mobile friendly "cards" dropdowns
 - so much validation
+- remove try/except in class_board

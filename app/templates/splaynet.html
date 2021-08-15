@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>SplayNet v0</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
     <script language="JavaScript1.2" type="text/javascript">
 
     function fillIn(){
@@ -37,53 +40,123 @@
     </script>
 </head>
 <body onload="fillIn()">
-<h1>Splaynet</h1>
-<p>All of your bases are belong to us</p>
-<form action="{{ url_for('index') }}" method="POST" name="login_info">
-    <label>Enter BGA_LOGIN</label>
-    <input type="text" name="BGA_LOGIN">
-    <br><br>
-    <label>Enter BGA_PASSWORD</label>
-    <input type="text" name="BGA_PASSWORD">
-    <br><br>
-    <label>Enter BGA_NAME</label>
-    <input type="text" name="BGA_NAME">
-    <br><br>
-    <label>Enter table id</label>
-    <input type="text" name="TABLE_ID">
-    <br><br>
-    <label>Enter starting cards</label><br>
-    <input list="age_1_cards" name="card_1"><br>
-    <input list="age_1_cards" name="card_2">
-    <datalist id="age_1_cards">
-        <option value="Archery">
-        <option value="Metalworking">
-        <option value="Oars">
-        <option value="Agriculture">
-        <option value="Domestication">
-        <option value="Masonry">
-        <option value="Clothing">
-        <option value="Sailing">
-        <option value="The_Wheel">
-        <option value="Pottery">
-        <option value="Tools">
-        <option value="Writing">
-        <option value="Code_of_Laws">
-        <option value="City_States">
-        <option value="Mysticism">
-    </datalist>
-    <br><br>
-    <input type="submit" name="refresh" value="Refresh">
-</form>
-{% if result %}
-    <br><br>
-    {{ result[0] }} <!-- Date updated -->
-    <br><br>
-    {% for game_state in result[1] %}
-        {{ game_state }} <!-- whatever to prettyprint -->
-        <br><br>
-    {% endfor %}
-    <br><br>
-{% endif %}
+<div class="container-sm" style="max-width: 540px;">
+    <div class="mb-3">
+        <h1>Splaynet</h1>
+        <label>All of your bases are belong to us</label>
+    </div>
+    <form action="{{ url_for('index') }}" method="POST" name="login_info">
+        <div class="mb-1">
+            <input type="text" name="BGA_LOGIN" placeholder="BGA login email" class="form-control">
+        </div>
+        <div class="mb-1">
+            <input type="text" name="BGA_PASSWORD" placeholder="BGA password" class="form-control">
+        </div>
+        <div class="mb-1">
+            <input type="text" name="BGA_NAME" placeholder="BGA handle (e.g., Jeffpacito)" class="form-control">
+        </div>
+        <div class="mb-1">
+            <input type="text" name="TABLE_ID" placeholder="Table ID" class="form-control">
+        </div>
+        <div class="mb-1">
+            <input list="age_1_cards" name="card_1" placeholder="Starting card 1" class="form-control">
+        </div>
+        <div class="mb-3">
+            <input list="age_1_cards" name="card_2" placeholder="Starting card 2" class="form-control">
+        </div>
+        <datalist id="age_1_cards">
+            <option value="Agriculture">
+            <option value="Archery">
+            <option value="City_States">
+            <option value="Clothing">
+            <option value="Code_of_Laws">
+            <option value="Domestication">
+            <option value="Masonry">
+            <option value="Metalworking">
+            <option value="Mysticism">
+            <option value="Oars">
+            <option value="Pottery">
+            <option value="Sailing">
+            <option value="Tools">
+            <option value="The_Wheel">
+            <option value="Writing">
+        </datalist>
+        <div class="mb-3">
+            <input type="submit" name="refresh" value="Refresh" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+
+
+<div class="container-sm" style="max-width: 540px;">
+
+    {% if result %}
+
+        <div class="accordion" id="accordionExample">
+            {% for game_state in result %}
+                {% set outer_loop = loop %}
+                <div class="accordion-item">
+                    <!-- HEADER -->
+                    <h2 class="accordion-header" id="heading_{{ outer_loop.index }}">
+                       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ outer_loop.index }}"
+                               aria-expanded="true" aria-controls="collapse_{{ outer_loop.index }}">
+                           {% for key, value in game_state.items() %}
+                               {{ key }}
+                           {% endfor %}
+                       </button>
+                    </h2>
+                    <!-- FIRST DROP DOWN -->
+                    <div id="collapse_{{ outer_loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading_{{ outer_loop.index }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            {% for key, sub_cards in game_state.items() %}
+                                <!-- SECOND ACCORDIAN -->
+
+                                {% if sub_cards %}
+                                    <div class="accordion" id="subaccordion{{ outer_loop.index}}">
+                                        {% for card in sub_cards %}
+                                            {% set card_loop = loop %}
+
+                                            <div class="accordion-item">
+                                                <!-- SECOND HEADER -->
+                                                <h2 class="accordion-header" id="heading_{{ outer_loop.index }}_{{ card_loop.index }}">
+                                                   <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                           data-bs-target="#collapse_{{ outer_loop.index }}_{{ card_loop.index }}"
+                                                           aria-expanded="true"
+                                                           aria-controls="collapse_{{ outer_loop.index }}_{{ card_loop.index }}">
+                                                       {% for key, value in card.items() %}
+                                                           {{ key }}
+                                                       {% endfor %}
+
+                                                   </button>
+                                                </h2>
+
+                                                <div id="collapse_{{ outer_loop.index }}_{{ card_loop.index }}" class="accordion-collapse collapse"
+                                                     aria-labelledby="heading_{{ outer_loop.index }}_{{ card_loop.index }}" data-bs-parent="#subaccordion{{ outer_loop.index}}">
+                                                    <div class="accordion-body">
+
+                                                       {% for key, value in card.items() %}
+                                                           {{ value }}
+                                                       {% endfor %}
+
+                                                    </div>
+                                                </div>
+
+                                            </div> <!-- second accordian cards -->
+                                        {% endfor %}
+                                    </div> <!-- second accordian -->
+
+                                {% endif %}
+
+                           {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

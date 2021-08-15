@@ -156,7 +156,8 @@ class Innovation():
 
             output.append({el: x_REVERSE})
 
-        return pprint.pformat(output, compact=True)
+        #return pprint.pformat(output, compact=True)
+        return output
 
     # //////////////////////////////////////////////////////////////////////////
     def dump(self):

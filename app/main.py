@@ -18,10 +18,7 @@ def calc_move_result(form, request):
     # get the game_state to pretty print
     pretty_game_state = process_moves(form, move_queue, n_players)
 
-    # get update time
-    last_update = str(datetime.datetime.now())
-
-    return [last_update, pretty_game_state]
+    return pretty_game_state
 
 # -----------------------------------------------------------------------------
 @app.route('/', methods=['GET', 'POST'])

@@ -33,7 +33,7 @@ compound_verbs = [
 ]
 
 ###
-Debug = False
+Debug = True
 if Debug:
     GOOGLE_CHROME_PATH = ""
     CHROMEDRIVER_PATH = "chromedriver"

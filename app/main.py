@@ -13,11 +13,11 @@ app = Flask(__name__)
 def calc_move_result(form, request):
 
     # get queue of new moves
-    # move_queue, n_players = get_move_queue(form)
+    move_queue, n_players = get_move_queue(form)
 
     # get the game_state to pretty print
-    #pretty_game_state = process_moves(form, move_queue, n_players)
-    pretty_game_state = {}
+    pretty_game_state = process_moves(form, move_queue, n_players)
+
     return pretty_game_state
 
 # -----------------------------------------------------------------------------

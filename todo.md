@@ -4,3 +4,9 @@
 - loading wheel
 - so much validation
 - remove try/except in class_board
+- safer password handling
+- collapsable login
+- read 2 first cards from page
+
+#### Note
+- The game created coded "Road building" lowercase but "Canal Building" uppercase

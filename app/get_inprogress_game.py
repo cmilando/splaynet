@@ -61,7 +61,11 @@ def get_move_queue(form):
 # /////////////////////////////////////////////////////////////////////////////
 def log_clean(l):
 
+    # parse using Beautiful Soup
     txt = bs_parse(l)
+
+    # make all lower-case
+    txt = txt.lower()
 
     # STEP 1) Do some basic cleaning
     # make it so this is easier to find
@@ -69,9 +73,14 @@ def log_clean(l):
         txt = txt.replace('score pile', 'score_pile')
 
     # make card names a single string
+    # they are not consistent about case here,
+    # sometimes its 'Road building' sometimes 'Road Building' which
+    # makes no sense
+    # make use of lower() and title() here
     for card in CARD_NAMES:
-        if txt.find(card) > 0:
-            txt = txt.replace(card, card.replace(' ', '_'))
+        card_lower = card.lower()
+        if txt.find(card_lower) > 0:
+            txt = txt.replace(card_lower, card.replace(' ', '_'))
 
     # replace all compound verbs
     for cv in compound_verbs:
@@ -135,7 +144,7 @@ def get_webdriver(form, t_sleep=5):
     time.sleep(t_sleep)
 
     ## Go to in-progress table
-    print('Go to table table ' + TABLE_ID)
+    print('Go to table ' + TABLE_ID)
     url_game = "https://boardgamearena.com/9/innovation?table=" + TABLE_ID
     driver.get(url_game)
 
@@ -144,7 +153,8 @@ def get_webdriver(form, t_sleep=5):
 # /////////////////////////////////////////////////////////////////////////////
 def get_parsed_kwargs(txt, form, players):
 
-    me_actions = ['You ' + opt for opt in me_verbs]
+    # switch this to lowercase `you`
+    me_actions = ['you ' + opt for opt in me_verbs]
     is_me_action = any(txt.startswith(a) for a in me_actions)
     player_dict = {players[i - 1].text :i for i in range(1, len(players) + 1)}
 
@@ -212,8 +222,10 @@ def get_parsed_kwargs(txt, form, players):
         if fmt_map[p] == 'None':
             continue
 
+        # need to add .lower() because to handle card weirdness all is lower
         for player in player_dict:
-            if fmt_map[p] in [player, "{0}'s".format(player)]:
+            player_lower = player.lower()
+            if fmt_map[p] in [player_lower, "{0}'s".format(player_lower)]:
                 fmt_map[p] = player_dict[player]
 
         if fmt_map[p] == 'their':
@@ -241,6 +253,7 @@ def get_parsed_kwargs(txt, form, players):
             fmt_map[p] = int(fmt_map[p].strip())
 
     ## seems like card name might need trimming? weird
+    ## also given Road building vs Road Building
     for p in ['card_name']:
 
         fmt_map[p] = fmt_map[p].strip()
@@ -255,6 +268,10 @@ def get_parsed_kwargs(txt, form, players):
         'card_age': fmt_map['card_age'],
         'card_name': fmt_map['card_name']
     }
+
+    for o in kwargs:
+        if kwargs[o] == 'None':
+            kwargs[o] = None
 
     return kwargs
 

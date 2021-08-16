@@ -23,9 +23,7 @@ def process_moves(form, move_queue, n_players):
     # then process move_queue
     for move in move_queue:
 
-        for o in move:
-            if move[o] == 'None':
-                move[o] = None
+        print(move['move_string'])
 
         game.move_card(from_player_num=move['from_player_num'],
                        to_player_num=move['to_player_num'],

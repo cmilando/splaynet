@@ -9,15 +9,14 @@ from time import sleep
 from rq import Queue
 from rq.job import Job
 from rq import get_current_job
-
+from worker import conn
 from redis import Redis
 
 import time
 import json
 import os
 
-r = Redis(os.environ.get('REDIS_URL', 'localhost'))
-q = Queue(connection=r, default_timeout="10m")
+q = Queue(connection=conn, default_timeout="10m")
 
 from app.process_moves import process_moves
 from app.get_inprogress_game import get_move_queue
@@ -45,7 +44,7 @@ def enq():
 @app.route('/progress/<string:job_id>')
 def progress(job_id):
     def get_status():
-        job = Job.fetch(job_id, connection=r)
+        job = Job.fetch(job_id, connection=conn)
         status = job.get_status()
 
         while status != 'finished':

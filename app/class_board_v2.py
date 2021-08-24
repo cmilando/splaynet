@@ -7,6 +7,7 @@
 import json
 import pprint
 import flask
+from airium import Airium
 from app.config import CARD_DATA, CARD_DATA_REVERSE
 
 # /////////////////////////////////////////////////////////////////////////////
@@ -230,7 +231,76 @@ class Innovation():
             value = self.peek('achievement', card_age=card_age)
             output.append({key: value})
 
-        return output
+        # now, make it a template string
+        # involving the accordions
+        a = Airium()
+        outer_loop = 1
+
+        with a.div(klass="accordion", id="accordionExample"):
+            for game_state in output:
+
+                with a.div(klass="accordion-item"):
+                    # header
+                    with a.h2(klass="accordion-header", id="heading_{0}".format(outer_loop)):
+                        button_kwargs = {
+                            "data-bs-toggle": "collapse",
+                            "data-bs-target": "#collapse_{0}".format(outer_loop),
+                            "aria-expanded": "true",
+                            "aria-controls": "collapse_{0}".format(outer_loop)
+                        }
+                        with a.button(type="button", klass="accordion-button", **button_kwargs):
+                            for key in game_state:
+                                a(key)
+                    # body
+                    outer_body_kwargs = {
+                        "aria-labelledby":"heading_{0}".format(outer_loop),
+                        "data-bs-parent": "#accordionExample"
+                    }
+                    with a.div(id="collapse_{0}".format(outer_loop), klass="accordion-collapse collapse",
+                               **outer_body_kwargs):
+                        with a.div(klass="accordion-body"):
+                            for key, sub_cards in game_state.items():
+                                if sub_cards:
+                                    inner_loop = 1
+                                    # <div class="accordion" id="subaccordion{{ outer_loop.index}}">
+                                    with a.div(klass="accordion", id="subaccordion{0}".format(outer_loop)):
+                                        for card in sub_cards:
+                                            with a.div(klass="accordion-item"):
+                                                # Inner card header
+                                                with a.h2(klass="accordion-header", id="heading_{0}_{1}".format(outer_loop, inner_loop)):
+                                                    sub_button_kwargs = {
+                                                        "data-bs-toggle": "collapse",
+                                                        "data-bs-target": "#collapse_{0}_{1}".format(outer_loop, inner_loop),
+                                                        "aria-expanded": "true",
+                                                        "aria-controls": "collapse_{0}_{1}".format(outer_loop, inner_loop),
+                                                    }
+                                                    with a.button(type="button", klass="accordion-button", **sub_button_kwargs):
+                                                        for card_age, value_dict in card.items():
+                                                            a(card_age)
+
+                                                # inner card body
+                                                inner_body_kwargs = {
+                                                    "aria-labelledby": "heading_{0}_{1}".format(outer_loop, inner_loop),
+                                                    "data-bs-parent": "#subaccordion{0}".format(outer_loop)
+                                                }
+                                                with a.div(id="collapse_{0}_{1}".format(outer_loop, inner_loop),
+                                                            klass="accordion-collapse collapse", **inner_body_kwargs):
+                                                    with a.div(klass="accordion-body"):
+                                                        for card_age, value_dict in card.items():
+                                                            for pval, value_list in value_dict.items():
+                                                                a("There is a <strong>{0}</strong> chance that this card is:".format(pval))
+                                                                with a.ul():
+                                                                    for value in value_list:
+                                                                        with a.li():
+                                                                            a(value)
+
+                                            inner_loop += 1
+
+                    outer_loop += 1
+
+        template_str = str(a)
+
+        return template_str
 
     # //////////////////////////////////////////////////////////////////////////
     def move_card(self, from_player_num, to_player_num, from_state, to_state,

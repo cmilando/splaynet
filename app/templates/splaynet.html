@@ -51,36 +51,38 @@
     </script>
 </head>
 <body onload="fillIn()">
-<div class="container-sm" style="max-width: 540px;">
-    <div class="mb-3">
-        <h1>Splaynet</h1>
-        <label>All of your bases are belong to us. </label>
-        <a href="https://github.com/cmilando/splaynet">GitHub</a>
-    </div>
-    <form action="{{ url_for('index') }}" method="POST" name="login_info">
+    <div class="container-sm" style="max-width: 540px;">
+        <div class="mb-3">
+            <h1>Splaynet</h1>
+            <label>All of your bases are belong to us. </label>
+            <a href="https://github.com/cmilando/splaynet">GitHub</a>
+        </div>
         <div class="mb-1">
-            <input type="text" name="BGA_LOGIN" placeholder="BGA login email" class="form-control">
+            <input type="text" id="BGA_LOGIN" name="BGA_LOGIN" placeholder="BGA login email" class="form-control">
         </div>
         <div class="input-group mb-1">
-            <input type="password" name="BGA_PASSWORD" placeholder="BGA password" class="form-control">
+            <input type="password" id="BGA_PASSWORD" name="BGA_PASSWORD" placeholder="BGA password" class="form-control" value="7TtNN5%%C5*eb4">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="reveal()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye">
-  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-</svg>
+    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+    </svg>
             </button>
         </div>
         <div class="mb-1">
-            <input type="text" name="BGA_NAME" placeholder="BGA handle (e.g., Jeffpacito)" class="form-control">
+            <input type="text" id="BGA_NAME" name="BGA_NAME" placeholder="BGA handle (e.g., Jeffpacito)" class="form-control">
         </div>
         <div class="mb-1">
-            <input type="text" name="TABLE_ID" placeholder="Table ID" class="form-control">
+            <input type="text" id="BGA_ID_NUM" name="BGA_ID_NUM" placeholder="BGA ID NUM" class="form-control" value="85097697">
         </div>
         <div class="mb-1">
-            <input list="age_1_cards" name="card_1" placeholder="Starting card 1" class="form-control">
+            <input type="text" id="TABLE_ID" name="TABLE_ID" placeholder="Table ID" class="form-control" value="190682737">
+        </div>
+        <div class="mb-1">
+            <input list="age_1_cards" id="card_1" name="card_1" placeholder="Starting card 1" class="form-control">
         </div>
         <div class="mb-3">
-            <input list="age_1_cards" name="card_2" placeholder="Starting card 2" class="form-control">
+            <input list="age_1_cards" id="card_2" name="card_2" placeholder="Starting card 2" class="form-control">
         </div>
         <datalist id="age_1_cards">
             <option value="Agriculture">
@@ -99,91 +101,97 @@
             <option value="The_Wheel">
             <option value="Writing">
         </datalist>
+        <div class="mb-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="check_rapid" checked>
+              <label class="form-check-label" for="check_rapid">
+                Try rapid check?
+              </label>
+            </div>
+        </div>
         <div class="mb-3">
-            <input type="submit" name="refresh" value="Refresh" class="btn btn-primary">
+            <input type="button" name="refresh" value="Refresh" class="btn btn-primary" id="refresh_button">
         </div>
-    </form>
-</div>
-
-
-<div class="container-sm" style="max-width: 540px;">
-
-    {% if result %}
-
-        <div class="accordion" id="accordionExample">
-            {% for game_state in result %}
-                {% set outer_loop = loop %}
-                <div class="accordion-item">
-                    <!-- HEADER -->
-                    <h2 class="accordion-header" id="heading_{{ outer_loop.index }}">
-                       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ outer_loop.index }}"
-                               aria-expanded="true" aria-controls="collapse_{{ outer_loop.index }}">
-                           {% for key, value in game_state.items() %}
-                               {{ key }}
-                           {% endfor %}
-                       </button>
-                    </h2>
-                    <!-- FIRST DROP DOWN -->
-                    <div id="collapse_{{ outer_loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading_{{ outer_loop.index }}" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            {% for key, sub_cards in game_state.items() %}
-                                <!-- SECOND ACCORDIAN -->
-
-                                {% if sub_cards %}
-                                    <div class="accordion" id="subaccordion{{ outer_loop.index}}">
-                                        {% for card in sub_cards %}
-                                            {% set card_loop = loop %}
-
-                                            <div class="accordion-item">
-                                                <!-- SECOND HEADER -->
-                                                <h2 class="accordion-header" id="heading_{{ outer_loop.index }}_{{ card_loop.index }}">
-                                                   <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                           data-bs-target="#collapse_{{ outer_loop.index }}_{{ card_loop.index }}"
-                                                           aria-expanded="true"
-                                                           aria-controls="collapse_{{ outer_loop.index }}_{{ card_loop.index }}">
-                                                       {% for key, value in card.items() %}
-                                                           {{ key }}
-                                                       {% endfor %}
-
-                                                   </button>
-                                                </h2>
-
-                                                <div id="collapse_{{ outer_loop.index }}_{{ card_loop.index }}" class="accordion-collapse collapse"
-                                                     aria-labelledby="heading_{{ outer_loop.index }}_{{ card_loop.index }}" data-bs-parent="#subaccordion{{ outer_loop.index}}">
-                                                    <div class="accordion-body">
-
-                                                       {% for key, value_dict in card.items() %}
-                                                            <!-- and now what, make a table? -->
-                                                            {% for pval, value_list in value_dict.items() %}
-                                                                There is a <strong>{{ pval }}</strong> chance this card is:
-                                                                <ul>
-                                                                    {% for value in value_list %}
-                                                                        <li>{{ value }}</li>
-                                                                    {% endfor %}
-                                                                </ul>
-
-                                                            {% endfor %}
-                                                       {% endfor %}
-
-                                                    </div>
-                                                </div>
-
-                                            </div> <!-- second accordian cards -->
-                                        {% endfor %}
-                                    </div> <!-- second accordian -->
-
-                                {% endif %}
-
-                           {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+        <div class="mb-3">
+            <div class="spinner-border" role="status" id="spinner" style="display: none">
+              <span class="sr-only"></span>
+            </div>
         </div>
 
-    {% endif %}
+    </div>
 
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <div class="container-sm" style="max-width: 540px;", id="result">
+        <!-- RESULT GOES HERE -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+    const button = document.getElementById("refresh_button")
+    const BGA_LOGIN = document.getElementById("BGA_LOGIN")
+    const BGA_PASSWORD = document.getElementById("BGA_PASSWORD")
+    const BGA_NAME = document.getElementById("BGA_NAME")
+    const BGA_ID_NUM = document.getElementById("BGA_ID_NUM")
+    const TABLE_ID = document.getElementById("TABLE_ID")
+    const card_1 = document.getElementById("card_1")
+    const card_2 = document.getElementById("card_2")
+    const spinner = document.getElementById("spinner")
+
+    button.addEventListener('click', function(e) {
+
+      spinner.style.display = "block";
+
+      fetch(`${window.origin}/enqueue`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            form :{
+              BGA_LOGIN: BGA_LOGIN.value,
+              BGA_PASSWORD: BGA_PASSWORD.value,
+              BGA_NAME: BGA_NAME.value,
+              BGA_ID_NUM: BGA_ID_NUM.value,
+              TABLE_ID: TABLE_ID.value,
+              card_1: card_1.value,
+              card_2: card_2.value
+            }
+        }),
+      }).then((r) => {
+        r.json().then((data) => {
+
+          // The job.id returned from the server once enqueued:
+          job_id = data['job_id'];
+
+          const source = new EventSource("/progress/" + job_id);
+
+          source.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log(data);
+
+            if (data['status'] == 'finished') {
+
+              // Manually set progress to 100 when job is finished, as
+              // actual progress value may be less from last read.
+
+              spinner.style.display = "none";
+
+              source.close();
+
+              // Just write the result which is included in the last streamed item
+              // to the page
+              document.getElementById('result').innerHTML = data['result'];
+            }
+          }
+
+        })
+      });
+
+    });
+
+    </script>
+
+
 </body>
 </html>

@@ -116,7 +116,7 @@ def log_clean(l):
 def get_webdriver(form, t_sleep=5):
     # uses spyder to get BGA logs
     # stops at the log hea
-    job = get_current_job(connection=conn)
+    job = get_current_job()
 
     LOGIN_URL = 'https://en.boardgamearena.com/account?'
 

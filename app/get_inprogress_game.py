@@ -4,7 +4,9 @@ from app.config import me_verbs, opponent_verbs, \
     CARD_NAMES, span_options, compound_verbs, GOOGLE_CHROME_PATH, CHROMEDRIVER_PATH
 import time
 from bs4 import BeautifulSoup
+from worker import conn
 from copy import deepcopy
+from rq import get_current_job
 
 # /////////////////////////////////////////////////////////////////////////////
 def bs_parse(l):
@@ -114,6 +116,7 @@ def log_clean(l):
 def get_webdriver(form, t_sleep=5):
     # uses spyder to get BGA logs
     # stops at the log hea
+    job = get_current_job(connection=conn)
 
     LOGIN_URL = 'https://en.boardgamearena.com/account?'
 
@@ -133,6 +136,8 @@ def get_webdriver(form, t_sleep=5):
     chrome_options.binary_location = GOOGLE_CHROME_PATH
 
     print('Login')
+    job.meta['progress'] = "Login to BGA ..."
+    job.save_meta()
     driver = webdriver.Chrome(options=chrome_options,
                               executable_path=CHROMEDRIVER_PATH)
     driver.get(LOGIN_URL)
@@ -141,7 +146,8 @@ def get_webdriver(form, t_sleep=5):
     driver.find_element_by_id('username_input').send_keys(BGA_LOGIN)
     driver.find_element_by_id('password_input').send_keys(BGA_PASSWORD)
     driver.find_element_by_id("login_button").click()
-
+    job.meta['progress'] = "Finding table ..."
+    job.save_meta()
     # confirm that you actually logged in?
     time.sleep(t_sleep)
 
@@ -150,9 +156,13 @@ def get_webdriver(form, t_sleep=5):
     print('Go to table ' + TABLE_ID)
 
     if CHECK_RAPID:
+        job.meta['progress'] = "Rapid check ..."
+        job.save_meta()
         url_game = "https://boardgamearena.com/9/innovation?table=" + TABLE_ID
         driver.get(url_game)
     else:
+        job.meta['progress'] = "Slow check ..."
+        job.save_meta()
         url_game = "https://boardgamearena.com/9/innovation?table=" + TABLE_ID + \
                    "&replayLastTurn=2000&replayLastTurnPlayer=" + BGA_ID_NUM
         driver.get(url_game)
@@ -161,8 +171,10 @@ def get_webdriver(form, t_sleep=5):
         move_nbr = None
         tmp_nbr = 1
         while tmp_nbr != move_nbr:
-            print("Move #{0}".format(move_nbr))
             move_nbr = tmp_nbr
+            print("Move #{0}".format(move_nbr))
+            job.meta['progress'] = "Move #{0} ...".format(move_nbr)
+            job.save_meta()
             tmp_nbr = int(driver.find_element_by_id('move_nbr').text)
             time.sleep(10)
 

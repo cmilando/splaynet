@@ -5,8 +5,8 @@
 - remove try/except in class_board
 - safer password handling
 - collapsable login
+- move javascript to separate files
 - read 2 first cards from page
-- add cookies back in, think this has to be client side
 
 ### Near future
 - add hoverable icons so you see the card image when you hover over its name (this will probably make the build bigger than 500 MB though)
@@ -14,5 +14,5 @@
 - loading wheel
 
 ### Far future
-- use spyder to crawl all Innovation games on BGA, from both player perspectives, and come up with recommendations. Probably for this you want a separate engine that this script calls when you get the current gamestate. So send the gamestate to an AWS thing, and it will return 3 potential moves
+- use spyder to crawl all Innovation games on BGA, from both player perspectives, and come up with recommendations. Probably for this you want a separate engine that this script calls when you get the current gamestate. So send the gamestate to another heroku site, and it will return 3 potential moves
 

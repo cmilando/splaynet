@@ -119,10 +119,13 @@
         <div class="mb-3">
             <input type="button" name="refresh" value="Refresh" class="btn btn-primary" id="refresh_button">
         </div>
-        <div class="mb-3">
+        <div class="mb-1">
             <div class="spinner-border" role="status" id="spinner" style="display: none">
               <span class="sr-only"></span>
             </div>
+        </div>
+        <div class="mb-3">
+            <p id="loading_text" style="display: none">dummy</p>
         </div>
 
     </div>
@@ -145,6 +148,7 @@
     const card_2 = document.getElementById("card_2")
     const check_rapid = document.getElementById("check_rapid")
     const spinner = document.getElementById("spinner")
+    const loading_text = document.getElementById("loading_text")
 
     button.addEventListener('click', function(e) {
 
@@ -159,6 +163,7 @@
       setCookie("check_rapid", check_rapid.checked, 7);
 
       spinner.style.display = "block";
+      loading_text.style.display = "block";
 
       fetch(`${window.origin}/enqueue`, {
         method: "POST",
@@ -189,12 +194,15 @@
             const data = JSON.parse(event.data);
             console.log(data);
 
+            loading_text.innerHTML = data['value'];
+
             if (data['status'] == 'finished') {
 
               // Manually set progress to 100 when job is finished, as
               // actual progress value may be less from last read.
 
               spinner.style.display = "none";
+              loading_text.style.display = "none";
 
               source.close();
 

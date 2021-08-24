@@ -34,7 +34,7 @@ def enq():
 @app.route('/progress/<string:job_id>')
 def progress(job_id):
     def get_status():
-        job = Job.fetch(job_id)
+        job = Job.fetch(job_id, connection=conn)
         status = job.get_status()
         print("JOB: {0}; STATUS: {1}".format(job.id, status))
 

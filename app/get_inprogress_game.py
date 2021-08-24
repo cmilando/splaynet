@@ -121,6 +121,7 @@ def get_webdriver(form, t_sleep=5):
     BGA_PASSWORD = form['BGA_PASSWORD']
     TABLE_ID = form['TABLE_ID']
     BGA_ID_NUM = form['BGA_ID_NUM']
+    CHECK_RAPID = form['check_rapid']
 
     ## Set up headless webdriver
     chrome_options = webdriver.ChromeOptions()
@@ -147,18 +148,23 @@ def get_webdriver(form, t_sleep=5):
     ## Go to in-progress table
     ## potential source of error if the game goes over 2000 moves but ...
     print('Go to table ' + TABLE_ID)
-    url_game = "https://boardgamearena.com/9/innovation?table=" + TABLE_ID + \
-               "&replayLastTurn=2000&replayLastTurnPlayer=" + BGA_ID_NUM
-    driver.get(url_game)
 
-    # wait num_moves * 3 seconds to load
-    move_nbr = None
-    tmp_nbr = 1
-    while tmp_nbr != move_nbr:
-        print(move_nbr)
-        move_nbr = tmp_nbr
-        tmp_nbr = int(driver.find_element_by_id('move_nbr').text)
-        time.sleep(10)
+    if CHECK_RAPID:
+        url_game = "https://boardgamearena.com/9/innovation?table=" + TABLE_ID
+        driver.get(url_game)
+    else:
+        url_game = "https://boardgamearena.com/9/innovation?table=" + TABLE_ID + \
+                   "&replayLastTurn=2000&replayLastTurnPlayer=" + BGA_ID_NUM
+        driver.get(url_game)
+
+        # wait num_moves * 10 seconds to load
+        move_nbr = None
+        tmp_nbr = 1
+        while tmp_nbr != move_nbr:
+            print("Move #{0}".format(move_nbr))
+            move_nbr = tmp_nbr
+            tmp_nbr = int(driver.find_element_by_id('move_nbr').text)
+            time.sleep(10)
 
     return driver
 

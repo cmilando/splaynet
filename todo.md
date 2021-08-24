@@ -6,6 +6,7 @@
 - safer password handling
 - collapsable login
 - read 2 first cards from page
+- add cookies back in, think this has to be client side
 
 ### Near future
 - add hoverable icons so you see the card image when you hover over its name (this will probably make the build bigger than 500 MB though)

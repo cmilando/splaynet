@@ -33,21 +33,18 @@ def calc_move_result(form):
     # get the game_state to pretty print
     pretty_game_state = process_moves(form, move_queue, n_players)
 
-    return str(pretty_game_state)
+    return pretty_game_state
 
 
 @app.route('/enqueue', methods=['POST'])
 def enq():
-    print('EnQUEUE')
     form = request.get_json()['form']
-    print(form)
     job = q.enqueue(calc_move_result, form)
     return {'job_id': job.id}
 
 @app.route('/progress/<string:job_id>')
 def progress(job_id):
     def get_status():
-        print('GEt STATUS')
         job = Job.fetch(job_id, connection=r)
         status = job.get_status()
 
@@ -76,36 +73,8 @@ def progress(job_id):
 # -----------------------------------------------------------------------------
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    return make_response(render_template('splaynet.html'))
 
-    # make response
-    resp = make_response(
-        render_template('splaynet.html'))
 
-    if request.method == 'POST':
-        print('request = POST')
-        form = request.get_json()['form']
-
-        # save form fields
-        BGA_LOGIN = form['BGA_LOGIN']
-        resp.set_cookie('BGA_LOGIN', BGA_LOGIN)
-
-        BGA_PASSWORD = form['BGA_PASSWORD']
-        resp.set_cookie('BGA_PASSWORD', BGA_PASSWORD)
-
-        BGA_NAME = form['BGA_NAME']
-        resp.set_cookie('BGA_NAME', BGA_NAME)
-
-        TABLE_ID = form['TABLE_ID']
-        resp.set_cookie('TABLE_ID', TABLE_ID)
-
-        card_1 = form['card_1']
-        resp.set_cookie('card_1', card_1)
-
-        card_2 = form['card_2']
-        resp.set_cookie('card_2', card_2)
-
-    return resp
-
-# -----------------------------------------------------------------------------
 
 

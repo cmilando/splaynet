@@ -8,44 +8,51 @@
 
     <script language="JavaScript1.2" type="text/javascript">
 
-    function fillIn(){
-        if (document.cookie != ""){
-            cookies = document.cookie.split(";");
-            for (var i = 0; i < cookies.length; i++) {
-                cookie = cookies[i].trim().split("=");
-                if (cookie[0] == 'BGA_LOGIN') {
-                    quoted_value = cookie[1];
-                    document.login_info.BGA_LOGIN.value = quoted_value.replace(/^"|"$/g, '');
-                }
-                if (cookie[0] == 'BGA_PASSWORD') {
-                    document.login_info.BGA_PASSWORD.value = cookie[1];
-                }
-                if (cookie[0] == 'BGA_NAME') {
-                    document.login_info.BGA_NAME.value = cookie[1];
-                }
-                if (cookie[0] == 'TABLE_ID') {
-                    document.login_info.TABLE_ID.value = cookie[1];
-                }
-                if (cookie[0] == 'card_1') {
-                    document.login_info.card_1.value = cookie[1];
-                }
-                if (cookie[0] == 'card_2') {
-                    document.login_info.card_2.value = cookie[1];
-                }
-            }
+    function setCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
         }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+
+    function fillIn(){
+
+        document.getElementById("BGA_LOGIN").value = getCookie("BGA_LOGIN");
+        document.getElementById("BGA_PASSWORD").value = getCookie("BGA_PASSWORD");
+        document.getElementById("BGA_NAME").value = getCookie("BGA_NAME");
+        document.getElementById("BGA_ID_NUM").value = getCookie("BGA_ID_NUM");
+        document.getElementById("TABLE_ID").value = getCookie("TABLE_ID");
+        document.getElementById("card_1").value = getCookie("card_1");
+        document.getElementById("card_2").value = getCookie("card_2");
+        document.getElementById("check_rapid").checked = getCookie("check_rapid");
+
     }
 
     function reveal() {
-
       var pwd = document.getElementsByName("BGA_PASSWORD")[0];
-
       if (pwd.type === 'password') {
         pwd.type = 'text';
       } else {
          pwd.type = 'password';
       }
-
     }
 
     </script>
@@ -136,9 +143,20 @@
     const TABLE_ID = document.getElementById("TABLE_ID")
     const card_1 = document.getElementById("card_1")
     const card_2 = document.getElementById("card_2")
+    const check_rapid = document.getElementById("check_rapid")
     const spinner = document.getElementById("spinner")
 
     button.addEventListener('click', function(e) {
+
+      // set all cookies
+      setCookie("BGA_LOGIN", BGA_LOGIN.value, 7);
+      setCookie("BGA_PASSWORD", BGA_PASSWORD.value, 7);
+      setCookie("BGA_NAME", BGA_NAME.value, 7);
+      setCookie("BGA_ID_NUM", BGA_ID_NUM.value, 7);
+      setCookie("TABLE_ID", TABLE_ID.value, 7);
+      setCookie("card_1", card_1.value, 7);
+      setCookie("card_2", card_2.value, 7);
+      setCookie("check_rapid", check_rapid.checked, 7);
 
       spinner.style.display = "block";
 

@@ -1,25 +1,14 @@
-from flask import Flask
-from flask import render_template
-from flask import request
 from flask import make_response
-import datetime
-from flask import Flask, redirect, url_for, request, render_template, Response
-from time import sleep
-
+from flask import Flask, request, render_template, Response
 from rq import Queue
 from rq.job import Job
-from rq import get_current_job
 from worker import conn
-from redis import Redis
-
 import time
 import json
-import os
-
-q = Queue(connection=conn, default_timeout="10m")
-
 from app.process_moves import process_moves
 from app.get_inprogress_game import get_move_queue
+
+q = Queue(connection=conn, default_timeout="10m")
 
 app = Flask(__name__)
 
@@ -37,6 +26,7 @@ def calc_move_result(form):
 
 @app.route('/enqueue', methods=['POST'])
 def enq():
+    print('ENQUEUE')
     form = request.get_json()['form']
     job = q.enqueue(calc_move_result, form)
     return {'job_id': job.id}
@@ -44,13 +34,15 @@ def enq():
 @app.route('/progress/<string:job_id>')
 def progress(job_id):
     def get_status():
-        job = Job.fetch(job_id, connection=conn)
+        job = Job.fetch(job_id)
         status = job.get_status()
+        print("JOB: {0}; STATUS: {1}".format(job.id, status))
 
         while status != 'finished':
 
             status = job.get_status()
             job.refresh()
+            print("JOB: {0}; STATUS: {1}".format(job.id, status))
 
             d = {'status': status}
 
@@ -65,13 +57,15 @@ def progress(job_id):
 
             json_data = json.dumps(d)
             yield f"data:{json_data}\n\n"
-            time.sleep(1)
+
+            time.sleep(4)
 
     return Response(get_status(), mimetype='text/event-stream')
 
 # -----------------------------------------------------------------------------
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    print('GET INDEX')
     return make_response(render_template('splaynet.html'))
 
 

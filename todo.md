@@ -7,6 +7,7 @@
 - collapsable login
 - move javascript to separate files
 - read 2 first cards from page
+- job id printing error, socket breaks etc h18 error
 
 ### Near future
 - add hoverable icons so you see the card image when you hover over its name (this will probably make the build bigger than 500 MB though)

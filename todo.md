@@ -1,5 +1,8 @@
 # ToDo
 
+- job breaks when move is unknown
+- see Dillen comment about reading the logs directly rather than reading page UI
+
 ### v0
 - so much validation (see Flask error handling)
 - remove try/except in class_board

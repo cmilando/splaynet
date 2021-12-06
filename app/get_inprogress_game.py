@@ -8,6 +8,7 @@ from worker import conn
 from rq.job import Job
 from copy import deepcopy
 from rq import get_current_job
+import re
 
 # /////////////////////////////////////////////////////////////////////////////
 def bs_parse(l):
@@ -69,6 +70,9 @@ def log_clean(l):
 
     # make all lower-case
     txt = txt.lower()
+
+    # STEP 0) make all multi-space into one
+    txt = re.sub('\s+', ' ', txt)
 
     # STEP 1) Do some basic cleaning
     # make it so this is easier to find
@@ -227,6 +231,11 @@ def get_parsed_kwargs(txt, form, players):
         fmt_str = opponent_verbs[verb]['fmt_str']
         fmt_map = deepcopy(opponent_verbs[verb]['fmt_map'])
 
+    # debug
+    # print(txt)
+    # print(verb)
+    # print("//////")
+
     ## -----------------------------------------------
     # outside the loop
     # "fmt_str": "{0} meld {1} from your hand.",
@@ -248,10 +257,17 @@ def get_parsed_kwargs(txt, form, players):
             if fmt_map[obj].isnumeric():
                 fmt_map[obj] = parsed_txt[int(fmt_map[obj])]
         except:
+            print ('----------------------------------------------')
+            print(">>>> ERROR MESSAGE <<<")
+            print("/// likely means the fmt map is off, key error or something ///")
+            print(verb)
             print(txt)
             print(obj)
             print(fmt_map)
+            print(fmt_str)
             print(parsed_txt)
+            print(">>> END ERROR MESSAGE <<<")
+            print("****************************************************")
             raise
 
     ## so first is player_num lookup

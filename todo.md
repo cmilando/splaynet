@@ -1,5 +1,5 @@
 # ToDo
-
+- Why is checked for main button not working
 - job breaks when move is unknown
 - see Dillen comment about reading the logs directly rather than reading page UI
 

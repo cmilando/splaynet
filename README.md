@@ -7,3 +7,12 @@ Flask app for probabilities behind the card game Innovation
 * helpful link about cookies in javascript [link](https://stackoverflow.com/questions/14573223/set-cookie-and-get-cookie-with-javascript)
 * progress-bar example that taught me about event-stream [link](https://gist.github.com/vulcan25/52fe1ba5860d0a0448d99fc74428123e)
 * airium lets you build template strings [link](https://pypi.org/project/airium/), but I made them first [link](https://getbootstrap.com/docs/5.0/components/accordion/)
+
+#### reminders for running local
+```
+> flask run
+```
+and in a separate window:
+```
+> rq worker 
+```

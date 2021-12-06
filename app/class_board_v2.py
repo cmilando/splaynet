@@ -124,13 +124,16 @@ class Innovation():
                         card.options[o] = card.options[o] / sum_probs
 
     # //////////////////////////////////////////////////////////////////////////
-    def peek(self, state, card_age=None, player_num=None):
+    def peek(self, state, card_age=None, player_num=None, pretty_print=False):
         """
         Does a nice print out of cards in each pile
+
+        Usage: self.peek("hand", card_age=2, player_num=2)
 
         :param state:
         :param card_age:
         :param player_num:
+        :param pretty_print:
         :return:
         """
 
@@ -157,7 +160,9 @@ class Innovation():
 
             output.append({el: x_REVERSE})
 
-        #return pprint.pformat(output, compact=True)
+        if pretty_print:
+            print(pprint.pformat(output, compact=True))
+
         return output
 
     # //////////////////////////////////////////////////////////////////////////
@@ -322,7 +327,16 @@ class Innovation():
         if from_state == 'supply':
             card_origin = getattr(self, from_state)[card_age]
         else:
-            card_origin = getattr(self, from_state)[from_player_num]
+            try:
+                card_origin = getattr(self, from_state)[from_player_num]
+            except:
+                print("---------------")
+                print("<< Error >>")
+                print(from_state)
+                print(from_player_num)
+                print(getattr(self, from_state))
+                print("***************")
+                raise
 
         # get behavior differs if you only know card age versus card name
         if card_name:

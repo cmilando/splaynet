@@ -32,6 +32,9 @@ def process_moves(form, move_queue, n_players):
                        card_age=move['card_age'],
                        card_name=move['card_name'])
 
+        # debug
+        # game.peek("hand", player_num=2, pretty_print=True)
+
     # return
     return game.pretty_dump()
 

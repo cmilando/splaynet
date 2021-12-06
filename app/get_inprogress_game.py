@@ -244,8 +244,15 @@ def get_parsed_kwargs(txt, form, players):
     ## just fill in the things with numbers
     ## this is just for {#} objects
     for obj in fmt_map:
-        if fmt_map[obj].isnumeric():
-            fmt_map[obj] = parsed_txt[int(fmt_map[obj])]
+        try:
+            if fmt_map[obj].isnumeric():
+                fmt_map[obj] = parsed_txt[int(fmt_map[obj])]
+        except:
+            print(txt)
+            print(obj)
+            print(fmt_map)
+            print(parsed_txt)
+            raise
 
     ## so first is player_num lookup
     for p in ['subject', 'from_player', 'to_player']:

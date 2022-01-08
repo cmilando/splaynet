@@ -21,6 +21,15 @@ def process_moves(form, move_queue, n_players):
                        to_state='hand', card_age=1)
 
     # then process move_queue
+    print("{0} moves to process".format(len(move_queue)))
+
+    # pre print all of them
+    i = 1
+    for move in move_queue:
+
+        print("Move {0}: {1}".format(i, move['move_string']))
+        i = i + 1
+
     for move in move_queue:
 
         print(move['move_string'])

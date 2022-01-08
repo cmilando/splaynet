@@ -165,6 +165,7 @@ def get_webdriver(form, t_sleep=5):
         job.save_meta()
         url_game = "https://boardgamearena.com/9/innovation?table=" + TABLE_ID
         driver.get(url_game)
+
     else:
         job.meta['progress'] = "Slow check ..."
         job.save_meta()
@@ -258,7 +259,7 @@ def get_parsed_kwargs(txt, form, players):
                 fmt_map[obj] = parsed_txt[int(fmt_map[obj])]
         except:
             print ('----------------------------------------------')
-            print(">>>> ERROR MESSAGE <<<")
+            print(">>>> ERROR MESSAGE - POS #1 <<<")
             print("/// likely means the fmt map is off, key error or something ///")
             print(verb)
             print(txt)

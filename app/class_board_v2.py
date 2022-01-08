@@ -331,7 +331,7 @@ class Innovation():
                 card_origin = getattr(self, from_state)[from_player_num]
             except:
                 print("---------------")
-                print("<< Error >>")
+                print("<< Error -- pos #3>>")
                 print(from_state)
                 print(from_player_num)
                 print(getattr(self, from_state))
@@ -353,6 +353,10 @@ class Innovation():
                         card_prob = card_origin[card_i].options[card_name]
                     card_i += 1
                 except:
+                    print('----------------------------------------------')
+                    print(">>>> ERROR MESSAGE - POS #2 <<<")
+                    print("/// likely means you need to switch to non-rapid check ///")
+                    print("/// solution: hit the actual API instead of reading the log ///")
                     print('from_state = {0}'.format(from_state))
                     print('to_state = {0}'.format(to_state))
                     print('from_player_num = {0}'.format(from_player_num))
@@ -360,6 +364,8 @@ class Innovation():
                     print('card_age = {0}'.format(card_age))
                     print('card_name = {0}'.format(card_name))
                     print(self.peek(from_state, card_age=card_age, player_num=from_player_num))
+                    print(">>> END ERROR MESSAGE <<<")
+                    print("****************************************************")
                     raise
 
             # pop from where it is

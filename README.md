@@ -9,10 +9,21 @@ Flask app for probabilities behind the card game Innovation
 * airium lets you build template strings [link](https://pypi.org/project/airium/), but I made them first [link](https://getbootstrap.com/docs/5.0/components/accordion/)
 
 #### reminders for running local
+
+in config.py, set `Debug = True`
+
+Then in two console windows:
+
 ```
 > flask run
 ```
-and in a separate window:
+and:
 ```
 > rq worker 
+```
+
+#### pushing to heroku
+Make sure that `Debug = False` in config.py when you push
+```
+git push heroku origin:master
 ```

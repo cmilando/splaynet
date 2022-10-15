@@ -27,17 +27,48 @@ def get_game_state():
     
     # get the current form object
     form = request.get_json()['form']
-    
-    # initialize
-    n_players = int(form['n_players'])
-    game = Innovation(n_players=n_players)
+    print(form)
+    print(form['initialize'])
 
-    # draw my first cards
-    game.move_card(from_player_num="1", to_player_num="1", \
-        from_state='supply', to_state='hand', card_name=form['card_1'])
+    if form['initialize']:
+        
+        print("Initialize!")
 
-    game.move_card(from_player_num="1", to_player_num="1", \
-        from_state='supply', to_state='hand', card_name=form['card_2'])
+        # initialize
+        n_players = int(form['n_players'])
+        game = Innovation(n_players=n_players)
+
+        # draw my first cards
+        game.move_card(from_player_num=None, to_player_num="1", \
+            from_state='supply', to_state='hand', card_name=form['card_1'])
+
+        game.move_card(from_player_num=None, to_player_num="1", \
+            from_state='supply', to_state='hand', card_name=form['card_2'])
+
+        # draw everyone else's first cards
+        for p in range(2, n_players + 1):
+            game.move_card(from_player_num=None, to_player_num=str(p), \
+                from_state='supply', to_state='hand', card_age=str(1))
+
+            game.move_card(from_player_num=str(p), to_player_num=str(p), \
+                from_state='supply', to_state='hand', card_age=str(1))  
+
+    else:
+
+        # read in the db
+        # now the real test, read from game state
+        with open('../game_data/game_state.json', 'r') as infile:
+            json_str = infile.read()
+            game = jsonpickle.decode(json_str)
+
+        # Make move
+        print("Move")
+        game.move_card(from_player_num=form['from_player'],
+                       to_player_num=form['to_player'],
+                       from_state=form['from_state'],
+                       to_state=form['to_state'],
+                       card_age=form['card_age'],
+                       card_name=form['card_name'])
 
     # dump game_state to file
     empJson = jsonpickle.encode(game, unpicklable=True)               

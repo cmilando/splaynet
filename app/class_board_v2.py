@@ -312,9 +312,9 @@ class Innovation(object):
         return template_str
 
     # //////////////////////////////////////////////////////////////////////////
-    def move_card(self, from_player_num: str, to_player_num:str, \
-        from_state:str, to_state:str, card_age: str = None, \
-            card_name:str = None):
+    def move_card(self, from_state: str, to_state: str, \
+        from_player_num: str = None, to_player_num: str = None, \
+        card_age: str = None, card_name:str = None):
         """
 
         :param from_player_num:
@@ -327,6 +327,9 @@ class Innovation(object):
         """
         if not card_age:
             card_age = CARD_DATA_REVERSE[card_name]
+
+        if not from_player_num and not to_player_num:
+            raise Exception("both players cannot be none")
 
         # Set the card origin
         if from_state == 'supply':

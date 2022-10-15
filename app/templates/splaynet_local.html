@@ -1,95 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>SplayNet v0</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--this gives you the bootstrap themes you want-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <script language="JavaScript1.2" type="text/javascript">
-
-    // function setCookie(name,value,days) {
-    //     var expires = "";
-    //     if (days) {
-    //         var date = new Date();
-    //         date.setTime(date.getTime() + (days*24*60*60*1000));
-    //         expires = "; expires=" + date.toUTCString();
-    //     }
-    //     document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-    // }
-
-    // function getCookie(name) {
-    //     var nameEQ = name + "=";
-    //     var ca = document.cookie.split(';');
-    //     for(var i=0;i < ca.length;i++) {
-    //         var c = ca[i];
-    //         while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    //         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    //     }
-    //     return null;
-    // }
-
-    // function eraseCookie(name) {
-    //     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    // }
-
-    // function fillIn(){
-
-    //     document.getElementById("BGA_LOGIN").value = getCookie("BGA_LOGIN");
-    //     document.getElementById("BGA_PASSWORD").value = getCookie("BGA_PASSWORD");
-    //     document.getElementById("BGA_NAME").value = getCookie("BGA_NAME");
-    //     document.getElementById("BGA_ID_NUM").value = getCookie("BGA_ID_NUM");
-    //     document.getElementById("TABLE_ID").value = getCookie("TABLE_ID");
-    //     document.getElementById("card_1").value = getCookie("card_1");
-    //     document.getElementById("card_2").value = getCookie("card_2");
-    //     document.getElementById("check_rapid").checked = getCookie("check_rapid");
-
-    // }
-
-    // function reveal() {
-    //   var pwd = document.getElementsByName("BGA_PASSWORD")[0];
-    //   if (pwd.type === 'password') {
-    //     pwd.type = 'text';
-    //   } else {
-    //      pwd.type = 'password';
-    //   }
-    // }
+        // These scripts run when the page loads I think?
 
     </script>
 </head>
 
 <body>
     <div class="container-sm" style="max-width: 540px;">
+        <!--HEADER-->
+        <!--the -3 means how many spaces around it you want -->
         <div class="mb-3">
             <h1>Splaynet</h1>
             <label>All of your bases are belong to us. </label>
             <a href="https://github.com/cmilando/splaynet">GitHub</a>
         </div>
-        <!--
-        <div class="mb-1">
-            <input type="text" id="BGA_LOGIN" name="BGA_LOGIN" placeholder="BGA login email" class="form-control">
-        </div>
-        <div class="input-group mb-1">
-            <input type="password" id="BGA_PASSWORD" name="BGA_PASSWORD" placeholder="BGA password" class="form-control" >
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="reveal()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye">
-    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-    </svg>
-            </button>
-        </div>
-        <div class="mb-1">
-            <input type="text" id="BGA_NAME" name="BGA_NAME" placeholder="BGA handle (e.g., Jeffpacito)" class="form-control">
-        </div>
-        <div class="mb-1">
-            <input type="text" id="BGA_ID_NUM" name="BGA_ID_NUM" placeholder="BGA ID NUM" class="form-control" >
-        </div>
-        <div class="mb-1">
-            <input type="text" id="TABLE_ID" name="TABLE_ID" placeholder="Table ID" class="form-control">
-        </div>
-        -->
+        <!--INITIALIZE OBJECTS-->
         <div class="mb-2" id="starting_set">
             <div class="mb-1">
                 <select id="n_players" name="n_players" placeholder="N players" class="form-control">
@@ -104,90 +38,226 @@
             <div class="mb-3">
                 <input list="age_1_cards" id="card_2" name="card_2" placeholder="Starting card 2" class="form-control">
             </div>
-            <datalist id="age_1_cards">
-                <option value="Agriculture">
-                <option value="Archery">
-                <option value="City_States">
-                <option value="Clothing">
-                <option value="Code_of_Laws">
-                <option value="Domestication">
-                <option value="Masonry">
-                <option value="Metalworking">
-                <option value="Mysticism">
-                <option value="Oars">
-                <option value="Pottery">
-                <option value="Sailing">
-                <option value="Tools">
-                <option value="The_Wheel">
-                <option value="Writing">
-            </datalist>
             <div class="mb-3">
-                <input type="button" name="refresh" value="Refresh" class="btn btn-primary" id="refresh_button">
+                <input type="button" name="initialize" value="Initialize" class="btn btn-primary"
+                    id="initialize_button">
             </div>
         </div>
-        <!--
-        <div class="mb-2">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="check_rapid" checked>
-              <label class="form-check-label" for="check_rapid">
-                Try rapid check?
-              </label>
+        <!--MOVE SET-->
+        <div id="move_set" class="mb-2" style="display:none">
+            <h6>Mandatory</h6>
+            <div class="mb-1">
+                <input list="card_states" id="from_state" name="from_state" placeholder="Card is moving from ..."
+                    class="form-control">
+            </div>
+            <div class="mb-3">
+                <input list="card_states" id="to_state" name="to_state" placeholder="Card is moving to ..."
+                    class="form-control">
+            </div>
+            <h6>Optional</h6>
+            <div class="mb-1">
+                <input list="player_options" id="from_player" name="from_player" placeholder="Card is moving from player # ..." class="form-control">
+            </div>
+            <div class="mb-1">
+                <input list="player_options" id="to_player" name="to_player" placeholder="Card is moving to player # ..." class="form-control">
+            </div>
+            <div class="mb-1">
+                <input list="card_names" id="card_name" name="card_name" placeholder="Card name is ..." class="form-control">
+            </div>
+            <div class="mb-3">
+                <input list="card_ages" id="card_age" name="card_age" placeholder="Card age is ..." class="form-control">
+            </div>
+            <div class="mb-3">
+                <input type="button" name="move" value="Move" class="btn btn-primary" id="move_button">
             </div>
         </div>
-        <div class="mb-3">
-            <input type="button" name="refresh" value="Refresh" class="btn btn-primary" id="refresh_button">
-        </div>
-        <div class="mb-1">
-            <div class="spinner-border" role="status" id="spinner" style="display: none">
-              <span class="sr-only"></span>
-            </div>
-        </div>
-        <div class="mb-3">
-            <p id="loading_text" style="display: none"></p>
-        </div>
-        -->
     </div>
 
-    <div class="container-sm" style="max-width: 540px;" id="result">
-        <!-- RESULT GOES HERE -->
+    <!-- RESULT GOES HERE -->
+    <div class="container-sm" style="max-width: 540px;" id="result"></div>
+
+    <!--FOOTER-->
+    <div class="container-sm" style="max-width: 540px;" id="footer">
         <p>&copy; 2021 Chad W. Milando</p>
     </div>
 
+    <!--CARD DATA LISTS-->
+    <datalist id="age_1_cards">
+        <option value="Agriculture">
+        <option value="Archery">
+        <option value="City_States">
+        <option value="Clothing">
+        <option value="Code_of_Laws">
+        <option value="Domestication">
+        <option value="Masonry">
+        <option value="Metalworking">
+        <option value="Mysticism">
+        <option value="Oars">
+        <option value="Pottery">
+        <option value="Sailing">
+        <option value="Tools">
+        <option value="The_Wheel">
+        <option value="Writing">
+    </datalist>
+
+    <datalist id="player_options">
+        <option value="1">
+        <option value="2">
+        <option value="3">
+        <option value="4">              
+    </datalist>
+
+    <datalist id="card_states">
+        <option value="hand">
+        <option value="supply">
+        <option value="board">
+        <option value="achievement">
+    </datalist>
+
+    <datalist id="card_ages">
+        <option value="1"></option>
+        <option value="2"></option>
+        <option value="3"></option>
+        <option value="4"></option>
+        <option value="5"></option>
+        <option value="6"></option>
+        <option value="7"></option>
+        <option value="8"></option>
+        <option value="9"></option>
+        <option value="10"></option>
+    </datalist>
+
+    <datalist id="card_names">
+        <option value="Agriculture">
+        <option value="Archery">
+        <option value="City_States">
+        <option value="Clothing">
+        <option value="Code_of_Laws">
+        <option value="Domestication">
+        <option value="Masonry">
+        <option value="Metalworking">
+        <option value="Mysticism">
+        <option value="Oars">
+        <option value="Pottery">
+        <option value="Sailing">
+        <option value="Tools">
+        <option value="The_Wheel">
+        <option value="Writing">    
+        <option value="Construction"></option>
+        <option value="Road_Building"></option>
+        <option value="Canal_Building"></option>
+        <option value="Fermenting"></option>
+        <option value="Currency"></option>
+        <option value="Mapmaking"></option>
+        <option value="Calendar"></option>
+        <option value="Mathematics"></option>
+        <option value="Monotheism"></option>
+        <option value="Philosophy"></option>
+        <option value="Engineering"></option>
+        <option value="Optics"></option>
+        <option value="Machinery"></option>
+        <option value="Medicine"></option>
+        <option value="Compass"></option>
+        <option value="Paper"></option>
+        <option value="Alchemy"></option>
+        <option value="Translation"></option>
+        <option value="Education"></option>
+        <option value="Feudalism"></option>
+        <option value="Colonialism"></option>
+        <option value="Gunpowder"></option>
+        <option value="Anatomy"></option>
+        <option value="Perspective"></option>
+        <option value="Invention"></option>
+        <option value="Navigation"></option>
+        <option value="Experimentation"></option>
+        <option value="Printing_Press"></option>
+        <option value="Enterprise"></option>
+        <option value="Reformation"></option>
+        <option value="Coal"></option>
+        <option value="The_Pirate_Code"></option>
+        <option value="Statistics"></option>
+        <option value="Steam_Engine"></option>
+        <option value="Banking"></option>
+        <option value="Measurement"></option>
+        <option value="Chemistry"></option>
+        <option value="Physics"></option>
+        <option value="Astronomy"></option>
+        <option value="Societies"></option>
+        <option value="Industrialization"></option>
+        <option value="Machine_Tools"></option>
+        <option value="Canning"></option>
+        <option value="Vaccination"></option>
+        <option value="Classification"></option>
+        <option value="Metric_System"></option>
+        <option value="Atomic_Theory"></option>
+        <option value="Encyclopedia"></option>
+        <option value="Democracy"></option>
+        <option value="Emancipation"></option>
+        <option value="Combustion"></option>
+        <option value="Explosives"></option>
+        <option value="Refrigeration"></option>
+        <option value="Sanitation"></option>
+        <option value="Bicycle"></option>
+        <option value="Electricity"></option>
+        <option value="Evolution"></option>
+        <option value="Publications"></option>
+        <option value="Lightning"></option>
+        <option value="Railroad"></option>
+        <option value="Flight"></option>
+        <option value="Mobility"></option>
+        <option value="Antibiotics"></option>
+        <option value="Skyscrapers"></option>
+        <option value="Corporations"></option>
+        <option value="Mass_Media"></option>
+        <option value="Quantum_Theory"></option>
+        <option value="Rocketry"></option>
+        <option value="Empiricism"></option>
+        <option value="Socialism"></option>
+        <option value="Composites"></option>
+        <option value="Fission"></option>
+        <option value="Ecology"></option>
+        <option value="Suburbia"></option>
+        <option value="Collaboration"></option>
+        <option value="Satellites"></option>
+        <option value="Computers"></option>
+        <option value="Genetics"></option>
+        <option value="Services"></option>
+        <option value="Specialization"></option>
+        <option value="Miniaturization"></option>
+        <option value="Robotics"></option>
+        <option value="Globalization"></option>
+        <option value="Stem_Cells"></option>
+        <option value="Databases"></option>
+        <option value="Self_Service"></option>
+        <option value="Bioengineering"></option>
+        <option value="Software"></option>
+        <option value="A.I."></option>
+        <option value="The_Internet"></option>
+    </datalist>
+
+    <!--TAIL SCRIPTS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+    <!--WHAT HAPPENS WHEN YOU PRESS BUTTONS-->
     <script type="text/javascript">
 
-        const button = document.getElementById("refresh_button")
-        //const BGA_LOGIN = document.getElementById("BGA_LOGIN")
-        //const BGA_PASSWORD = document.getElementById("BGA_PASSWORD")
-        //const BGA_NAME = document.getElementById("BGA_NAME")
-        //const BGA_ID_NUM = document.getElementById("BGA_ID_NUM")
-        //const TABLE_ID = document.getElementById("TABLE_ID")
+        // Things related to initialize
+        const initialize_button = document.getElementById("initialize_button")
         const n_players = document.getElementById("n_players")
         const card_1 = document.getElementById("card_1")
         const card_2 = document.getElementById("card_2")
         const starting_set = document.getElementById("starting_set")
-        //const check_rapid = document.getElementById("check_rapid")
-        //const spinner = document.getElementById("spinner")
-        //const loading_text = document.getElementById("loading_text")
 
-        button.addEventListener('click', function (e) {
-            //alert('clicked');
-            // set all cookies
-            //setCookie("BGA_LOGIN", BGA_LOGIN.value, 7);
-            //setCookie("BGA_PASSWORD", BGA_PASSWORD.value, 7);
-            //setCookie("BGA_NAME", BGA_NAME.value, 7);
-            //setCookie("BGA_ID_NUM", BGA_ID_NUM.value, 7);
-            //setCookie("TABLE_ID", TABLE_ID.value, 7);
-            //setCookie("card_1", card_1.value, 7);
-            //setCookie("card_2", card_2.value, 7);
-            //setCookie("check_rapid", check_rapid.checked, 7);
+        initialize_button.addEventListener('click', function (e) {
 
-            //spinner.style.display = "block";
-            //loading_text.style.display = "block";
-
+            // This is what sends the data to python
+            // without having to load the page
+            // I think window/origin allows for URL creation
+            // but honestly not sure
+            // I found a good article on fetch that basically described this
+            // well. 
             fetch(`${window.origin}/game_state`, {
                 method: "POST",
                 headers: {
@@ -195,30 +265,80 @@
                 },
                 body: JSON.stringify({
                     form: {
-                        //BGA_LOGIN: BGA_LOGIN.value,
-                        //BGA_PASSWORD: BGA_PASSWORD.value,
-                        //BGA_NAME: BGA_NAME.value,
-                        //BGA_ID_NUM: BGA_ID_NUM.value,
-                        //TABLE_ID: TABLE_ID.value,
+                        initialize: true,
                         n_players: n_players.value,
                         card_1: card_1.value,
-                        card_2: card_2.value,
-                        //check_rapid: check_rapid.checked
+                        card_2: card_2.value
                     }
                 }),
             }).then((r) => {
-                //alert('here1');
                 r.json().then((data) => {
 
-                    //alert(data);
+                    //set result to data
                     document.getElementById('result').innerHTML = data['result'];
 
                     // hide startup
                     starting_set.style.display = "none";
+
+                    // show move set
+                    move_set.style.display = "block";
                 })
             });
 
         });
+
+         // Things related to the move set
+         const move_set = document.getElementById("move_set")
+         const from_state = document.getElementById("from_state")
+         const to_state = document.getElementById("to_state")
+         const from_player = document.getElementById("from_player")
+         const to_player = document.getElementById("to_player")
+         const card_age = document.getElementById("card_age")
+         const card_name = document.getElementById("card_name")
+         const move_button = document.getElementById("move_button")
+
+         move_button.addEventListener('click', function(e) {
+
+            // This is what sends the data to python
+            // without having to load the page
+            // I think window/origin allows for URL creation
+            // but honestly not sure
+            // I found a good article on fetch that basically described this
+            // well. 
+            fetch(`${window.origin}/game_state`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    form: {
+                        initialize: false,
+                        from_state: from_state.value,
+                        from_player: from_player.value,
+                        to_state: to_state.value,
+                        to_player: to_player.value,
+                        card_age: card_age.value,
+                        card_name: card_name.value
+                    }
+                }),
+            }).then((r) => {
+                r.json().then((data) => {
+
+                    //set result to data
+                    document.getElementById('result').innerHTML = data['result'];
+
+                    //clear move stuff
+                    from_state.value = "";
+                    to_state.value = "";
+                    from_player.value = "";
+                    to_player.value = "";
+                    card_age.value = "";
+                    card_name.value = "";
+
+                })
+            });
+
+         });
 
     </script>
 

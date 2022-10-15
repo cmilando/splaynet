@@ -2,21 +2,22 @@
 # Author: CWM
 # Title: Card and Game classes for Innovation
 # Notes:
-# -
+# - adding `object` in the class definition helps with jsonpickle
+# - baby's first type hints
 # =============================================================================
 import json
 import pprint
 import flask
 from airium import Airium
-from app.config import CARD_DATA, CARD_DATA_REVERSE
+from config import CARD_DATA, CARD_DATA_REVERSE
 
 # /////////////////////////////////////////////////////////////////////////////
-class Card():
+class Card(object):
     """
 
     """
 
-    def __init__(self, age):
+    def __init__(self, age: str):
         """
         Card class only has age and options
         :param age: to initialize you just need to know card age
@@ -25,25 +26,25 @@ class Card():
         self.age = age
 
         # assign the probability of each card
-        possible_cards = CARD_DATA[str(age)]
+        possible_cards = CARD_DATA[age]
         self.options = {x: 1/len(possible_cards) for x in possible_cards}
 
     # the str method shows the card age and number of potential options
     def __str__(self):
 
-        return ('Age ' + str(self.age) + '')
+        return ('Age ' + self.age)
 
     # So that it looks nice in lists
     __repr__ = __str__
 
 
 # /////////////////////////////////////////////////////////////////////////////
-class Innovation():
+class Innovation(object):
     """
 
     """
 
-    def __init__(self, n_players):
+    def __init__(self, n_players: int):
         """
 
         :param n_players:
@@ -51,25 +52,25 @@ class Innovation():
 
         # initialize the game state
         self.n_players   = n_players
-        self.hand        = {x: [] for x in range(1, n_players + 1)}
-        self.score       = {x: [] for x in range(1, n_players + 1)}
-        self.board       = {x: [] for x in range(1, n_players + 1)}
-        self.achievement = {x: [] for x in range(1, 10)} # 1 to 9
-        self.supply      = {x: [] for x in range(1, 11)} # 1 to 10
+        self.hand        = {str(x): [] for x in range(1, n_players + 1)}
+        self.score       = {str(x): [] for x in range(1, n_players + 1)}
+        self.board       = {str(x): [] for x in range(1, n_players + 1)}
+        self.achievement = {str(x): [] for x in range(1, 10)} # 1 to 9
+        self.supply      = {str(x): [] for x in range(1, 11)} # 1 to 10
 
         # add cards to supply
         # for age 1: 15
         # for age 2-9: 10
         # for age 10: 10
         for _ in range(0, 15):
-            self.supply[1].append(Card(1))
+            self.supply["1"].append(Card("1"))
 
         for age in range(2, 9 + 1):
             for _ in range(0, 10):
-                self.supply[age].append(Card(age))
+                self.supply[str(age)].append(Card(str(age)))
 
         for _ in range(0, 10):
-            self.supply[10].append(Card(10))
+            self.supply["10"].append(Card("10"))
 
         # 1 card from supply ages 1 - 9 for the achievements
         for a in self.achievement:
@@ -77,7 +78,7 @@ class Innovation():
             self.achievement[a].append(achievement) # add to achievement
 
     # //////////////////////////////////////////////////////////////////////////
-    def reset_probabilities(self, object, card_age):
+    def reset_probabilities(self, object, card_age: str):
         """
         Whenever you get more infomration about a card, you need to
         reset probabilities in the places where you removed and added it
@@ -91,7 +92,7 @@ class Innovation():
 
         if n_cards_in_age:
 
-            for o in CARD_DATA[str(card_age)]:
+            for o in CARD_DATA[card_age]:
                 probs_to_merge = []
                 for card in cards_in_age:
                     probs_to_merge.append(card.options[o])
@@ -100,7 +101,7 @@ class Innovation():
                     card.options[o] = reset_prob
 
     # //////////////////////////////////////////////////////////////////////////
-    def remove_known_card(self, state, known_card):
+    def remove_known_card(self, state: str, known_card):
         """
         Prior to updating probabilities, you need to set the specific
         card option for a known card to 0 if you know its not somewhere
@@ -124,7 +125,8 @@ class Innovation():
                         card.options[o] = card.options[o] / sum_probs
 
     # //////////////////////////////////////////////////////////////////////////
-    def peek(self, state, card_age=None, player_num=None, pretty_print=False):
+    def peek(self, state: str, card_age: str=None, \
+        player_num: str=None, pretty_print: bool=False):
         """
         Does a nice print out of cards in each pile
 
@@ -209,6 +211,8 @@ class Innovation():
 
         Use this for MVP of splaynet output
 
+        TODO: Eventually, you need to fix the hardcoding of str(player_num)
+
         :return:
         """
 
@@ -220,7 +224,7 @@ class Innovation():
         for player_num in range(1, self.n_players + 1):
             for state in ['hand', 'score']:
                 key = "Player {0} {1}".format(player_num, state)
-                value = self.peek(state, player_num=player_num)
+                value = self.peek(state, player_num=str(player_num))
                 output.append({key: value})
 
         # For each card age:
@@ -228,12 +232,12 @@ class Innovation():
         #     > achievement
         for card_age in range(1, 11):
             key = "Supply Age {0}".format(card_age)
-            value = self.peek('supply', card_age=card_age)
+            value = self.peek('supply', card_age=str(card_age))
             output.append({key: value})
 
         for card_age in range(1, 10):
             key = "Achievement Age {0}".format(card_age)
-            value = self.peek('achievement', card_age=card_age)
+            value = self.peek('achievement', card_age=str(card_age))
             output.append({key: value})
 
         # now, make it a template string
@@ -308,8 +312,9 @@ class Innovation():
         return template_str
 
     # //////////////////////////////////////////////////////////////////////////
-    def move_card(self, from_player_num, to_player_num, from_state, to_state,
-              card_age = None, card_name = None):
+    def move_card(self, from_player_num: str, to_player_num:str, \
+        from_state:str, to_state:str, card_age: str = None, \
+            card_name:str = None):
         """
 
         :param from_player_num:

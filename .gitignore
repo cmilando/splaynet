@@ -3,3 +3,4 @@ env
 __pycache__
 *.pyc
 .token
+game_data

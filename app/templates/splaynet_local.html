@@ -90,30 +90,41 @@
             <input type="text" id="TABLE_ID" name="TABLE_ID" placeholder="Table ID" class="form-control">
         </div>
         -->
-        <div class="mb-1">
-            <input list="age_1_cards" id="card_1" name="card_1" placeholder="Starting card 1" class="form-control">
+        <div class="mb-2" id="starting_set">
+            <div class="mb-1">
+                <select id="n_players" name="n_players" placeholder="N players" class="form-control">
+                    <option value=2>2 players</option>
+                    <option value=3>3 players</option>
+                    <option value=4>4 players</option>
+                </select>
+            </div>
+            <div class="mb-1">
+                <input list="age_1_cards" id="card_1" name="card_1" placeholder="Starting card 1" class="form-control">
+            </div>
+            <div class="mb-3">
+                <input list="age_1_cards" id="card_2" name="card_2" placeholder="Starting card 2" class="form-control">
+            </div>
+            <datalist id="age_1_cards">
+                <option value="Agriculture">
+                <option value="Archery">
+                <option value="City_States">
+                <option value="Clothing">
+                <option value="Code_of_Laws">
+                <option value="Domestication">
+                <option value="Masonry">
+                <option value="Metalworking">
+                <option value="Mysticism">
+                <option value="Oars">
+                <option value="Pottery">
+                <option value="Sailing">
+                <option value="Tools">
+                <option value="The_Wheel">
+                <option value="Writing">
+            </datalist>
+            <div class="mb-3">
+                <input type="button" name="refresh" value="Refresh" class="btn btn-primary" id="refresh_button">
+            </div>
         </div>
-        <div class="mb-3">
-            <input list="age_1_cards" id="card_2" name="card_2" placeholder="Starting card 2" class="form-control">
-        </div>
-        <datalist id="age_1_cards">
-            <option value="Agriculture">
-            <option value="Archery">
-            <option value="City_States">
-            <option value="Clothing">
-            <option value="Code_of_Laws">
-            <option value="Domestication">
-            <option value="Masonry">
-            <option value="Metalworking">
-            <option value="Mysticism">
-            <option value="Oars">
-            <option value="Pottery">
-            <option value="Sailing">
-            <option value="Tools">
-            <option value="The_Wheel">
-            <option value="Writing">
-        </datalist>
-
         <!--
         <div class="mb-2">
             <div class="form-check">
@@ -135,10 +146,6 @@
             <p id="loading_text" style="display: none"></p>
         </div>
         -->
-        <div class="mb-3">
-            <input type="button" name="refresh" value="Refresh" class="btn btn-primary" id="refresh_button">
-        </div>
-
     </div>
 
     <div class="container-sm" style="max-width: 540px;" id="result">
@@ -158,8 +165,10 @@
         //const BGA_NAME = document.getElementById("BGA_NAME")
         //const BGA_ID_NUM = document.getElementById("BGA_ID_NUM")
         //const TABLE_ID = document.getElementById("TABLE_ID")
+        const n_players = document.getElementById("n_players")
         const card_1 = document.getElementById("card_1")
         const card_2 = document.getElementById("card_2")
+        const starting_set = document.getElementById("starting_set")
         //const check_rapid = document.getElementById("check_rapid")
         //const spinner = document.getElementById("spinner")
         //const loading_text = document.getElementById("loading_text")
@@ -191,6 +200,7 @@
                         //BGA_NAME: BGA_NAME.value,
                         //BGA_ID_NUM: BGA_ID_NUM.value,
                         //TABLE_ID: TABLE_ID.value,
+                        n_players: n_players.value,
                         card_1: card_1.value,
                         card_2: card_2.value,
                         //check_rapid: check_rapid.checked
@@ -203,6 +213,8 @@
                     //alert(data);
                     document.getElementById('result').innerHTML = data['result'];
 
+                    // hide startup
+                    starting_set.style.display = "none";
                 })
             });
 

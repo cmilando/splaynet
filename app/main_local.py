@@ -22,13 +22,32 @@ app = Flask(__name__)
 
 # ---------------------------------------------
 # this gets called by the javascript `fetch`
+@app.route("/undo", methods=['POST'])
+def undo_move():
+    
+    # read in the db
+    # now the real test, read from game state
+    with open('../game_data/game_state_backup.json', 'r') as infile:
+        json_str = infile.read()
+        game = jsonpickle.decode(json_str)
+        
+    # dump game_state to file
+    empJson = jsonpickle.encode(game, unpicklable=True)               
+    with open('../game_data/game_state.json', 'w') as outfile:
+        outfile.write(empJson)                       
+
+    # dump game state to accordion
+    # this is what is caught by fetch
+    # because you are doing this this way, the page doesn't re-render
+    return {'result': game.pretty_dump()}
+
+# ---------------------------------------------
+# this gets called by the javascript `fetch`
 @app.route("/game_state", methods=['POST'])
 def get_game_state():
     
     # get the current form object
     form = request.get_json()['form']
-    print(form)
-    print(form['initialize'])
 
     if form['initialize']:
         
@@ -53,6 +72,11 @@ def get_game_state():
             game.move_card(from_player_num=str(p), to_player_num=str(p), \
                 from_state='supply', to_state='hand', card_age=str(1))  
 
+        # dump game_state to backup file
+        backup = jsonpickle.encode(game, unpicklable=True)               
+        with open('../game_data/game_state_backup.json', 'w') as outfile:
+            outfile.write(backup) 
+
     else:
 
         # read in the db
@@ -60,6 +84,11 @@ def get_game_state():
         with open('../game_data/game_state.json', 'r') as infile:
             json_str = infile.read()
             game = jsonpickle.decode(json_str)
+        
+        # dump game_state to backup file
+        backup = jsonpickle.encode(game, unpicklable=True)               
+        with open('../game_data/game_state_backup.json', 'w') as outfile:
+            outfile.write(backup) 
 
         # Make move
         print("Move")
@@ -75,15 +104,10 @@ def get_game_state():
     with open('../game_data/game_state.json', 'w') as outfile:
         outfile.write(empJson)                       
 
-    # now the real test, read from game state
-    with open('../game_data/game_state.json', 'r') as infile:
-        json_str = infile.read()
-        game2 = jsonpickle.decode(json_str)
-
     # dump game state to accordion
     # this is what is caught by fetch
     # because you are doing this this way, the page doesn't re-render
-    return {'result': game2.pretty_dump()}
+    return {'result': game.pretty_dump()}
 
 # -----------------------------------------------------------------------------
 # this is what gets called initially
@@ -92,5 +116,6 @@ def index():
     print('GET INDEX')
     return make_response(render_template('splaynet_local.html'))
 
+# this should make it work but sometimes decides to fail, unclear why
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

@@ -67,8 +67,13 @@
             <div class="mb-3">
                 <input list="card_ages" id="card_age" name="card_age" placeholder="Card age is ..." class="form-control">
             </div>
-            <div class="mb-3">
-                <input type="button" name="move" value="Move" class="btn btn-primary" id="move_button">
+            <div style="display: inline">
+                
+                    <input type="button" name="move" value="Move" class="btn btn-primary mb-3" id="move_button">
+                
+               
+                    <input type="button" name="undo" value="Undo" class="btn btn-secondary mb-3" id="undo_button">
+              
             </div>
         </div>
     </div>
@@ -296,6 +301,7 @@
          const card_age = document.getElementById("card_age")
          const card_name = document.getElementById("card_name")
          const move_button = document.getElementById("move_button")
+         const undo_button = document.getElementById("undo_button")
 
          move_button.addEventListener('click', function(e) {
 
@@ -321,6 +327,37 @@
                         card_name: card_name.value
                     }
                 }),
+            }).then((r) => {
+                r.json().then((data) => {
+
+                    //set result to data
+                    document.getElementById('result').innerHTML = data['result'];
+
+                    //clear move stuff
+                    from_state.value = "";
+                    to_state.value = "";
+                    from_player.value = "";
+                    to_player.value = "";
+                    card_age.value = "";
+                    card_name.value = "";
+
+                })
+            });
+            
+         });
+
+         undo_button.addEventListener('click', function(e) {
+
+            fetch(`${window.origin}/undo`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    form: {
+                        dummy: false,  
+                    }
+                })
             }).then((r) => {
                 r.json().then((data) => {
 

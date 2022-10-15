@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>SplayNet v0</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>SplayNet v0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <script language="JavaScript1.2" type="text/javascript">
+  <script language="JavaScript1.2" type="text/javascript">
 
-    function setCookie(name,value,days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days*24*60*60*1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
 
     function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-        }
-        return null;
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
     }
 
     function eraseCookie(name) {
-        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
-    function fillIn(){
+    function fillIn() {
 
-        document.getElementById("BGA_LOGIN").value = getCookie("BGA_LOGIN");
-        document.getElementById("BGA_PASSWORD").value = getCookie("BGA_PASSWORD");
-        document.getElementById("BGA_NAME").value = getCookie("BGA_NAME");
-        document.getElementById("BGA_ID_NUM").value = getCookie("BGA_ID_NUM");
-        document.getElementById("TABLE_ID").value = getCookie("TABLE_ID");
-        document.getElementById("card_1").value = getCookie("card_1");
-        document.getElementById("card_2").value = getCookie("card_2");
-        document.getElementById("check_rapid").checked = getCookie("check_rapid");
+      document.getElementById("BGA_LOGIN").value = getCookie("BGA_LOGIN");
+      document.getElementById("BGA_PASSWORD").value = getCookie("BGA_PASSWORD");
+      document.getElementById("BGA_NAME").value = getCookie("BGA_NAME");
+      document.getElementById("BGA_ID_NUM").value = getCookie("BGA_ID_NUM");
+      document.getElementById("TABLE_ID").value = getCookie("TABLE_ID");
+      document.getElementById("card_1").value = getCookie("card_1");
+      document.getElementById("card_2").value = getCookie("card_2");
+      document.getElementById("check_rapid").checked = getCookie("check_rapid");
 
     }
 
@@ -51,93 +53,97 @@
       if (pwd.type === 'password') {
         pwd.type = 'text';
       } else {
-         pwd.type = 'password';
+        pwd.type = 'password';
       }
     }
 
-    </script>
+  </script>
 </head>
+
 <body onload="fillIn()">
-    <div class="container-sm" style="max-width: 540px;">
-        <div class="mb-3">
-            <h1>Splaynet</h1>
-            <label>All of your bases are belong to us. </label>
-            <a href="https://github.com/cmilando/splaynet">GitHub</a>
-        </div>
-        <div class="mb-1">
-            <input type="text" id="BGA_LOGIN" name="BGA_LOGIN" placeholder="BGA login email" class="form-control">
-        </div>
-        <div class="input-group mb-1">
-            <input type="password" id="BGA_PASSWORD" name="BGA_PASSWORD" placeholder="BGA password" class="form-control" >
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="reveal()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye">
-    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-    </svg>
-            </button>
-        </div>
-        <div class="mb-1">
-            <input type="text" id="BGA_NAME" name="BGA_NAME" placeholder="BGA handle (e.g., Jeffpacito)" class="form-control">
-        </div>
-        <div class="mb-1">
-            <input type="text" id="BGA_ID_NUM" name="BGA_ID_NUM" placeholder="BGA ID NUM" class="form-control" >
-        </div>
-        <div class="mb-1">
-            <input type="text" id="TABLE_ID" name="TABLE_ID" placeholder="Table ID" class="form-control">
-        </div>
-        <div class="mb-1">
-            <input list="age_1_cards" id="card_1" name="card_1" placeholder="Starting card 1" class="form-control">
-        </div>
-        <div class="mb-3">
-            <input list="age_1_cards" id="card_2" name="card_2" placeholder="Starting card 2" class="form-control">
-        </div>
-        <datalist id="age_1_cards">
-            <option value="Agriculture">
-            <option value="Archery">
-            <option value="City_States">
-            <option value="Clothing">
-            <option value="Code_of_Laws">
-            <option value="Domestication">
-            <option value="Masonry">
-            <option value="Metalworking">
-            <option value="Mysticism">
-            <option value="Oars">
-            <option value="Pottery">
-            <option value="Sailing">
-            <option value="Tools">
-            <option value="The_Wheel">
-            <option value="Writing">
-        </datalist>
-        <div class="mb-2">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="check_rapid" checked>
-              <label class="form-check-label" for="check_rapid">
-                Try rapid check?
-              </label>
-            </div>
-        </div>
-        <div class="mb-3">
-            <input type="button" name="refresh" value="Refresh" class="btn btn-primary" id="refresh_button">
-        </div>
-        <div class="mb-1">
-            <div class="spinner-border" role="status" id="spinner" style="display: none">
-              <span class="sr-only"></span>
-            </div>
-        </div>
-        <div class="mb-3">
-            <p id="loading_text" style="display: none"></p>
-        </div>
-
+  <div class="container-sm" style="max-width: 540px;">
+    <div class="mb-3">
+      <h1>Splaynet</h1>
+      <label>All of your bases are belong to us. </label>
+      <a href="https://github.com/cmilando/splaynet">GitHub</a>
+    </div>
+    <div class="mb-1">
+      <input type="text" id="BGA_LOGIN" name="BGA_LOGIN" placeholder="BGA login email" class="form-control">
+    </div>
+    <div class="input-group mb-1">
+      <input type="password" id="BGA_PASSWORD" name="BGA_PASSWORD" placeholder="BGA password" class="form-control">
+      <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="reveal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye">
+          <path
+            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+        </svg>
+      </button>
+    </div>
+    <div class="mb-1">
+      <input type="text" id="BGA_NAME" name="BGA_NAME" placeholder="BGA handle (e.g., Jeffpacito)" class="form-control">
+    </div>
+    <div class="mb-1">
+      <input type="text" id="BGA_ID_NUM" name="BGA_ID_NUM" placeholder="BGA ID NUM" class="form-control">
+    </div>
+    <div class="mb-1">
+      <input type="text" id="TABLE_ID" name="TABLE_ID" placeholder="Table ID" class="form-control">
+    </div>
+    <div class="mb-1">
+      <input list="age_1_cards" id="card_1" name="card_1" placeholder="Starting card 1" class="form-control">
+    </div>
+    <div class="mb-3">
+      <input list="age_1_cards" id="card_2" name="card_2" placeholder="Starting card 2" class="form-control">
+    </div>
+    <datalist id="age_1_cards">
+      <option value="Agriculture">
+      <option value="Archery">
+      <option value="City_States">
+      <option value="Clothing">
+      <option value="Code_of_Laws">
+      <option value="Domestication">
+      <option value="Masonry">
+      <option value="Metalworking">
+      <option value="Mysticism">
+      <option value="Oars">
+      <option value="Pottery">
+      <option value="Sailing">
+      <option value="Tools">
+      <option value="The_Wheel">
+      <option value="Writing">
+    </datalist>
+    <div class="mb-2">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="check_rapid" checked>
+        <label class="form-check-label" for="check_rapid">
+          Try rapid check?
+        </label>
+      </div>
+    </div>
+    <div class="mb-3">
+      <input type="button" name="refresh" value="Refresh" class="btn btn-primary" id="refresh_button">
+    </div>
+    <div class="mb-1">
+      <div class="spinner-border" role="status" id="spinner" style="display: none">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+    <div class="mb-3">
+      <p id="loading_text" style="display: none"></p>
     </div>
 
-    <div class="container-sm" style="max-width: 540px;" id="result">
-        <!-- RESULT GOES HERE -->
-        <p>&copy; 2021 Chad W. Milando</p>
-    </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <div class="container-sm" style="max-width: 540px;" id="result">
+    <!-- RESULT GOES HERE -->
+    <p>&copy; 2021 Chad W. Milando</p>
+  </div>
 
-    <script type="text/javascript">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
 
     const button = document.getElementById("refresh_button")
     const BGA_LOGIN = document.getElementById("BGA_LOGIN")
@@ -151,7 +157,7 @@
     const spinner = document.getElementById("spinner")
     const loading_text = document.getElementById("loading_text")
 
-    button.addEventListener('click', function(e) {
+    button.addEventListener('click', function (e) {
 
       // set all cookies
       setCookie("BGA_LOGIN", BGA_LOGIN.value, 7);
@@ -172,16 +178,16 @@
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            form :{
-              BGA_LOGIN: BGA_LOGIN.value,
-              BGA_PASSWORD: BGA_PASSWORD.value,
-              BGA_NAME: BGA_NAME.value,
-              BGA_ID_NUM: BGA_ID_NUM.value,
-              TABLE_ID: TABLE_ID.value,
-              card_1: card_1.value,
-              card_2: card_2.value,
-              check_rapid: check_rapid.checked
-            }
+          form: {
+            BGA_LOGIN: BGA_LOGIN.value,
+            BGA_PASSWORD: BGA_PASSWORD.value,
+            BGA_NAME: BGA_NAME.value,
+            BGA_ID_NUM: BGA_ID_NUM.value,
+            TABLE_ID: TABLE_ID.value,
+            card_1: card_1.value,
+            card_2: card_2.value,
+            check_rapid: check_rapid.checked
+          }
         }),
       }).then((r) => {
         r.json().then((data) => {
@@ -191,7 +197,7 @@
 
           const source = new EventSource("/progress/" + job_id);
 
-          source.onmessage = function(event) {
+          source.onmessage = function (event) {
             const data = JSON.parse(event.data);
             console.log(data);
 
@@ -218,7 +224,8 @@
 
     });
 
-    </script>
+  </script>
 
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>SplayNet v0</title>
@@ -23,6 +24,10 @@
             <label>All of your bases are belong to us. </label>
             <a href="https://github.com/cmilando/splaynet">GitHub</a>
         </div>
+        <div class="mb-3">
+            <input type="button" name="undo" value="Undo \ Load backup" class="btn btn-secondary mb-3" id="undo_button">
+        </div>
+
         <!--INITIALIZE OBJECTS-->
         <div class="mb-2" id="starting_set">
             <div class="mb-1">
@@ -45,6 +50,26 @@
         </div>
         <!--MOVE SET-->
         <div id="move_set" class="mb-2" style="display:none">
+            <hr></hr>
+            <!-- SPECIFIC: draw / draw and reveal / draw and meld / draw and tuck -->
+            <div style="display: inline;">
+                <input type="button" name="draw_to_hand" value="Draw / draw and reveal" 
+                    class="btn btn-primary mb-3" id="draw_to_hand_button">
+                <input type="button" name="draw_to_board" value="Draw and meld / draw and tuck" 
+                    class="btn btn-primary mb-3" id="draw_to_board_button">
+                <br>
+                Player # 
+                <input list="player_options" id="draw_player" name="draw_player"
+                    placeholder="#" class="form-control" style="width:15%; display:inline;"> 
+                draws a 
+                <input list="card_ages" id="draw_card_age" name="draw_card_age" 
+                    placeholder="Age" class="form-control" style="width:15%; display:inline;">
+                or draws
+                <input list="card_names" id="draw_card_name" name="draw_card_name" 
+                    placeholder="name" class="form-control" style="width:30%; display:inline;">
+            </div>
+            <hr></hr>
+            <!-- GENERIC -->
             <h6>Mandatory</h6>
             <div class="mb-1">
                 <input list="card_states" id="from_state" name="from_state" placeholder="Card is moving from ..."
@@ -56,27 +81,31 @@
             </div>
             <h6>Optional</h6>
             <div class="mb-1">
-                <input list="player_options" id="from_player" name="from_player" placeholder="Card is moving from player # ..." class="form-control">
+                <input list="player_options" id="from_player" name="from_player"
+                    placeholder="Card is moving from player # ..." class="form-control">
             </div>
             <div class="mb-1">
-                <input list="player_options" id="to_player" name="to_player" placeholder="Card is moving to player # ..." class="form-control">
+                <input list="player_options" id="to_player" name="to_player"
+                    placeholder="Card is moving to player # ..." class="form-control">
             </div>
             <div class="mb-1">
-                <input list="card_names" id="card_name" name="card_name" placeholder="Card name is ..." class="form-control">
+                <input list="card_names" id="card_name" name="card_name" placeholder="Card name is ..."
+                    class="form-control">
             </div>
             <div class="mb-3">
-                <input list="card_ages" id="card_age" name="card_age" placeholder="Card age is ..." class="form-control">
+                <input list="card_ages" id="card_age" name="card_age" placeholder="Card age is ..."
+                    class="form-control">
             </div>
             <div style="display: inline">
-                
-                    <input type="button" name="move" value="Move" class="btn btn-primary mb-3" id="move_button">
-                
-               
-                    <input type="button" name="undo" value="Undo" class="btn btn-secondary mb-3" id="undo_button">
-              
+
+                <input type="button" name="move" value="Move" class="btn btn-primary mb-3" id="move_button">
+
             </div>
         </div>
     </div>
+
+    <!-- ERROR MSG GOES HERE -->
+    <div class="container-sm" style="max-width: 540px;" id="error_msg" style="color: red;"></div>
 
     <!-- RESULT GOES HERE -->
     <div class="container-sm" style="max-width: 540px;" id="result"></div>
@@ -109,13 +138,14 @@
         <option value="1">
         <option value="2">
         <option value="3">
-        <option value="4">              
+        <option value="4">
     </datalist>
 
     <datalist id="card_states">
         <option value="hand">
         <option value="supply">
         <option value="board">
+        <option value="score">
         <option value="achievement">
     </datalist>
 
@@ -147,7 +177,7 @@
         <option value="Sailing">
         <option value="Tools">
         <option value="The_Wheel">
-        <option value="Writing">    
+        <option value="Writing">
         <option value="Construction"></option>
         <option value="Road_Building"></option>
         <option value="Canal_Building"></option>
@@ -248,6 +278,9 @@
     <!--WHAT HAPPENS WHEN YOU PRESS BUTTONS-->
     <script type="text/javascript">
 
+        // Error msg
+        const error_msg = document.getElementById("error_msg")
+
         // Things related to initialize
         const initialize_button = document.getElementById("initialize_button")
         const n_players = document.getElementById("n_players")
@@ -292,18 +325,18 @@
 
         });
 
-         // Things related to the move set
-         const move_set = document.getElementById("move_set")
-         const from_state = document.getElementById("from_state")
-         const to_state = document.getElementById("to_state")
-         const from_player = document.getElementById("from_player")
-         const to_player = document.getElementById("to_player")
-         const card_age = document.getElementById("card_age")
-         const card_name = document.getElementById("card_name")
-         const move_button = document.getElementById("move_button")
-         const undo_button = document.getElementById("undo_button")
+        // Things related to the move set
+        const move_set = document.getElementById("move_set")
+        const from_state = document.getElementById("from_state")
+        const to_state = document.getElementById("to_state")
+        const from_player = document.getElementById("from_player")
+        const to_player = document.getElementById("to_player")
+        const card_age = document.getElementById("card_age")
+        const card_name = document.getElementById("card_name")
+        const move_button = document.getElementById("move_button")
+        const undo_button = document.getElementById("undo_button")
 
-         move_button.addEventListener('click', function(e) {
+        move_button.addEventListener('click', function (e) {
 
             // This is what sends the data to python
             // without having to load the page
@@ -343,10 +376,11 @@
 
                 })
             });
-            
-         });
 
-         undo_button.addEventListener('click', function(e) {
+        });
+
+        // undo-button, in case you make a booboo
+        undo_button.addEventListener('click', function (e) {
 
             fetch(`${window.origin}/undo`, {
                 method: "POST",
@@ -355,7 +389,7 @@
                 },
                 body: JSON.stringify({
                     form: {
-                        dummy: false,  
+                        dummy: false,
                     }
                 })
             }).then((r) => {
@@ -372,10 +406,47 @@
                     card_age.value = "";
                     card_name.value = "";
 
+                    // hide startup
+                    starting_set.style.display = "none";
+
+                    // show move set
+                    move_set.style.display = "block";
+
                 })
             });
 
-         });
+        });
+
+        // SPECIALIZED
+        const draw_to_hand_button = document.getElementById("draw_to_hand_button")
+        const draw_to_board_button = document.getElementById("draw_to_board_button")
+        const draw_player = document.getElementById("draw_player")
+        const draw_card_age = document.getElementById("draw_card_age")
+        const draw_card_name = document.getElementById("draw_card_name")
+
+        draw_to_hand_button.addEventListener('click', function(e) {
+
+            from_state.value = 'supply';
+            to_state.value = 'hand';
+            to_player.value = draw_player.value;
+            card_age.value = draw_card_age.value;
+            card_name.value = draw_card_name.value;
+
+            move_button.click();
+
+        });
+
+        draw_to_board_button.addEventListener('click', function(e) {
+
+            from_state.value = 'supply';
+            to_state.value = 'board';
+            to_player.value = draw_player.value;
+            card_age.value = draw_card_age.value;
+            card_name.value = draw_card_name.value;
+
+            move_button.click();
+
+        });
 
     </script>
 

@@ -46,12 +46,20 @@ def undo_move():
 @app.route("/game_state", methods=['POST'])
 def get_game_state():
     
+    # initialize the error message
+    error_msg = False
+
     # get the current form object
     form = request.get_json()['form']
 
     if form['initialize']:
         
         print("Initialize!")
+
+        # check starting cards
+        if form['card_1'] == form['card_2']:
+            error_msg = 'ERROR!: Card 1 == Card 2'
+            return {'result': error_msg}
 
         # initialize
         n_players = int(form['n_players'])
@@ -92,6 +100,8 @@ def get_game_state():
 
         # Make move
         print("Move")
+        pprint(form)
+        # TODO: add a TryCatch for error_msg here
         game.move_card(from_player_num=form['from_player'],
                        to_player_num=form['to_player'],
                        from_state=form['from_state'],
@@ -107,7 +117,10 @@ def get_game_state():
     # dump game state to accordion
     # this is what is caught by fetch
     # because you are doing this this way, the page doesn't re-render
-    return {'result': game.pretty_dump()}
+    if error_msg:
+        return {'error_msg': error_msg}
+    else:
+        return {'result': game.pretty_dump()}
 
 # -----------------------------------------------------------------------------
 # this is what gets called initially

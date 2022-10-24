@@ -143,7 +143,7 @@ def get_webdriver(form, t_sleep=5):
     print('Login')
     # job.meta['progress'] = "Login to BGA ..."
     # job.save_meta()
-    driver = webdriver.Chrome(options=chrome_options,
+    driver = webdriver.Chrome(options=chrome_options, 
                               executable_path=CHROMEDRIVER_PATH)
     driver.get(LOGIN_URL)
 

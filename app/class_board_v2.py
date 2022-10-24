@@ -220,9 +220,10 @@ class Innovation(object):
 
         # For each player:
         #     > hand
+        #     > board
         #     > score
         for player_num in range(1, self.n_players + 1):
-            for state in ['hand', 'score']:
+            for state in ['hand', 'board', 'score']:
                 key = "Player {0} {1}".format(player_num, state)
                 value = self.peek(state, player_num=str(player_num))
                 output.append({key: value})
@@ -316,6 +317,8 @@ class Innovation(object):
         from_player_num: str = None, to_player_num: str = None, \
         card_age: str = None, card_name:str = None):
         """
+        TODO: At some point, you will need to add a positional element
+              Because tuck and meld do different things
 
         :param from_player_num:
         :param to_player_num:

@@ -3,6 +3,10 @@
 - job breaks when move is unknown
 - see Dillen comment about reading the logs directly rather than reading page UI
 
+# ML thoughts
+- a v0 of this could be a "thread assessment", try and code in what the worst thing that could happen is
+- what could be the worst thing that could happen
+
 ### v0
 - so much validation (see Flask error handling)
 - remove try/except in class_board
